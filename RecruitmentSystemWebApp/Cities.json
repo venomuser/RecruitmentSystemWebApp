@@ -1,0 +1,252 @@
+[
+  {
+    "Id": 1001,
+    "CityName": "تهران",
+    "ProvinceId": 29
+  },
+  {
+    "Id": 1002,
+    "CityName": "مشهد",
+    "ProvinceId": 17
+  },
+  {
+    "Id": 1003,
+    "CityName": "اصفهان",
+    "ProvinceId": 13
+  },
+  {
+    "Id": 1004,
+    "CityName": "شیراز",
+    "ProvinceId": 7
+  },
+  {
+    "Id": 1005,
+    "CityName": "تبریز",
+    "ProvinceId": 3
+  },
+  {
+    "Id": 1006,
+    "CityName": "کرج",
+    "ProvinceId": 1
+  },
+  {
+    "Id": 1007,
+    "CityName": "اهواز",
+    "ProvinceId": 19
+  },
+  {
+    "Id": 1008,
+    "CityName": "رشت",
+    "ProvinceId": 8
+  },
+  {
+    "Id": 1009,
+    "CityName": "کرمانشاه",
+    "ProvinceId": 15
+  },
+  {
+    "Id": 1010,
+    "CityName": "ارومیه",
+    "ProvinceId": 4
+  },
+  {
+    "Id": 1011,
+    "CityName": "زنجان",
+    "ProvinceId": 31
+  },
+  {
+    "Id": 1012,
+    "CityName": "قزوین",
+    "ProvinceId": 25
+  },
+  {
+    "Id": 1013,
+    "CityName": "قم",
+    "ProvinceId": 26
+  },
+  {
+    "Id": 1014,
+    "CityName": "اراک",
+    "ProvinceId": 23
+  },
+  {
+    "Id": 1015,
+    "CityName": "ساری",
+    "ProvinceId": 24
+  },
+  {
+    "Id": 1016,
+    "CityName": "گرگان",
+    "ProvinceId": 9
+  },
+  {
+    "Id": 1017,
+    "CityName": "اردبیل",
+    "ProvinceId": 2
+  },
+  {
+    "Id": 1018,
+    "CityName": "بندرعباس",
+    "ProvinceId": 11
+  },
+  {
+    "Id": 1019,
+    "CityName": "کرمان",
+    "ProvinceId": 14
+  },
+  {
+    "Id": 1020,
+    "CityName": "یاسوج",
+    "ProvinceId": 20
+  },
+  {
+    "Id": 1021,
+    "CityName": "بوشهر",
+    "ProvinceId": 5
+  },
+  {
+    "Id": 1022,
+    "CityName": "بجنورد",
+    "ProvinceId": 16
+  },
+  {
+    "Id": 1023,
+    "CityName": "بیرجند",
+    "ProvinceId": 18
+  },
+  {
+    "Id": 1024,
+    "CityName": "ایلام",
+    "ProvinceId": 12
+  },
+  {
+    "Id": 1025,
+    "CityName": "سنندج",
+    "ProvinceId": 21
+  },
+  {
+    "Id": 1026,
+    "CityName": "خرم‌آباد",
+    "ProvinceId": 22
+  },
+  {
+    "Id": 1027,
+    "CityName": "همدان",
+    "ProvinceId": 10
+  },
+  {
+    "Id": 1028,
+    "CityName": "ارومیه",
+    "ProvinceId": 4
+  },
+  {
+    "Id": 1029,
+    "CityName": "سمنان",
+    "ProvinceId": 27
+  },
+  {
+    "Id": 1030,
+    "CityName": "زاهدان",
+    "ProvinceId": 28
+  },
+  {
+    "Id": 1031,
+    "CityName": "یزد",
+    "ProvinceId": 30
+  },
+  {
+    "Id": 1032,
+    "CityName": "قشم",
+    "ProvinceId": 11
+  },
+  {
+    "Id": 1033,
+    "CityName": "چابهار",
+    "ProvinceId": 28
+  },
+  {
+    "Id": 1034,
+    "CityName": "کیش",
+    "ProvinceId": 11
+  },
+  {
+    "Id": 1035,
+    "CityName": "سردشت",
+    "ProvinceId": 4
+  },
+  {
+    "Id": 1036,
+    "CityName": "بانه",
+    "ProvinceId": 21
+  },
+  {
+    "Id": 1037,
+    "CityName": "بروجرد",
+    "ProvinceId": 22
+  },
+  {
+    "Id": 1038,
+    "CityName": "دزفول",
+    "ProvinceId": 19
+  },
+  {
+    "Id": 1039,
+    "CityName": "ماهشهر",
+    "ProvinceId": 19
+  },
+  {
+    "Id": 1040,
+    "CityName": "اندیمشک",
+    "ProvinceId": 19
+  },
+  {
+    "Id": 1041,
+    "CityName": "آبادان",
+    "ProvinceId": 19
+  },
+  {
+    "Id": 1042,
+    "CityName": "خرمشهر",
+    "ProvinceId": 19
+  },
+  {
+    "Id": 1043,
+    "CityName": "مهاباد",
+    "ProvinceId": 4
+  },
+  {
+    "Id": 1044,
+    "CityName": "بوکان",
+    "ProvinceId": 4
+  },
+  {
+    "Id": 1045,
+    "CityName": "سقز",
+    "ProvinceId": 21
+  },
+  {
+    "Id": 1046,
+    "CityName": "دهدشت",
+    "ProvinceId": 20
+  },
+  {
+    "Id": 1047,
+    "CityName": "کازرون",
+    "ProvinceId": 7
+  },
+  {
+    "Id": 1048,
+    "CityName": "مرودشت",
+    "ProvinceId": 7
+  },
+  {
+    "Id": 1049,
+    "CityName": "آمل",
+    "ProvinceId": 24
+  },
+  {
+    "Id": 1050,
+    "CityName": "بابل",
+    "ProvinceId": 24
+  }
+]
