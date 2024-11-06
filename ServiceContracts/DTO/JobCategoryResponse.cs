@@ -11,6 +11,8 @@ namespace ServiceContracts.DTO
     {
         public Guid CategoryId { get; set; }
         public string? CategoryName { get; set; }
+        public Guid? UserID { get; set; }
+        
     }
 
     public static class JobCategoryExtensions
@@ -21,7 +23,8 @@ namespace ServiceContracts.DTO
             {
 
                 CategoryId = jobCategory.Id,
-                CategoryName = jobCategory.CategoryName
+                CategoryName = jobCategory.CategoryName,
+                UserID = jobCategory.UserID
             };
         }
     }
