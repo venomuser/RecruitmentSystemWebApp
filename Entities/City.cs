@@ -15,9 +15,9 @@ namespace Entities
 
         [StringLength(50)]
         public string? CityName { get; set; }
-        public Guid? ProvinceId { get; set; }
+        public int? ProvinceId { get; set; }
 
         [ForeignKey(nameof(ProvinceId))]
-        public Province? Province { get; set; }
+        public virtual Province? Province { get; set; }
     }
 }

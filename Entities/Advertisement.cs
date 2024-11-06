@@ -9,10 +9,10 @@ namespace Entities
     {
         [Key]
         public Guid Id { get; set; }
-        public Guid? CityId { get; set; }
+        public long? CityId { get; set; }
 
         [ForeignKey(nameof(CityId))]
-        public City? City { get; set; }
+        public virtual City? City { get; set; }
 
         [StringLength(40)]
         public string? Gender { get; set; }
@@ -32,11 +32,14 @@ namespace Entities
         public Guid? JobCategoryId { get; set; }
 
         [ForeignKey(nameof(JobCategoryId))]
-        public JobCategory? JobCategory { get; set; }
+        public virtual JobCategory? JobCategory { get; set; }
         public bool? IsVerified { get; set; }
         public Guid? CompanyId { get; set; }
 
         [ForeignKey(nameof(CompanyId))]
-        public Company? Company { get; set; }
+        public virtual Company? Company { get; set; }
+
+        [StringLength(700)]
+        public string? NotVerificationDescription { get; set; }
     }
 }
