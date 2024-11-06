@@ -33,7 +33,7 @@ namespace Repositories
            return await _dbContext.JobCategories.ToListAsync();
         }
 
-        public async Task<List<JobCategory>> GetJobCategoryByUserId(Guid userID)
+        public async Task<List<JobCategory?>> GetJobCategoryByUserId(Guid userID)
         {
             return await _dbContext.JobCategories.Where(temp=> temp.UserID == userID).ToListAsync();
         }
