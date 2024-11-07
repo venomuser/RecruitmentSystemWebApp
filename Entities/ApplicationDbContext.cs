@@ -18,6 +18,7 @@ namespace Entities
         public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<JobCategory> JobCategories { get; set; }
         public virtual DbSet<Advertisement> Advertisements { get; set; }
+        public virtual DbSet<SalaryAmount> SalaryAmounts { get; set; }
 
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
@@ -33,6 +34,7 @@ namespace Entities
             builder.Entity<City>().ToTable("Cities");
             builder.Entity<JobCategory>().ToTable("JobCategories");
             builder.Entity<Advertisement>().ToTable("Advertisements");
+            builder.Entity<SalaryAmount>().ToTable("SalaryAmounts");
 
 
             List<Province> ProvincesSeedData = JsonSerializer.Deserialize<List<Province>>(File.ReadAllText("Provinces.json"));
@@ -45,6 +47,12 @@ namespace Entities
             foreach(var city in CitiesSeedData)
             {
                 builder.Entity<City>().HasData(city);
+            }
+
+            List<SalaryAmount> salaryAmountsSeedData = JsonSerializer.Deserialize<List<SalaryAmount>>(File.ReadAllText("SalaryAmount.json"));
+            foreach(var salary in salaryAmountsSeedData)
+            {
+                builder.Entity<SalaryAmount>().HasData(salary);
             }
         }
     }

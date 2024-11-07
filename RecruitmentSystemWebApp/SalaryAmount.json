@@ -1,0 +1,42 @@
+[
+  {
+    "Id": 1,
+    "SalaryExplanation": "1 الی 2 میلیون تومان"
+  },
+  {
+    "Id": 2,
+    "SalaryExplanation": "2 الی 3 میلیون تومان"
+  },
+  {
+    "Id": 3,
+    "SalaryExplanation": "3 الی 5 میلیون تومان"
+  },
+  {
+    "Id": 4,
+    "SalaryExplanation": "5 الی 10 میلیون تومان"
+  },
+  {
+    "Id": 5,
+    "SalaryExplanation": "10 الی 20 میلیون تومان"
+  },
+  {
+    "Id": 6,
+    "SalaryExplanation": "20 الی 40 میلیون تومان"
+  },
+  {
+    "Id": 7,
+    "SalaryExplanation": "40 الی 60 میلیون تومان"
+  },
+  {
+    "Id": 8,
+    "SalaryExplanation": "60 الی 80 میلیون تومان"
+  },
+  {
+    "Id": 9,
+    "SalaryExplanation": "80 الی 100 میلیون تومان"
+  },
+  {
+    "Id": 10,
+    "SalaryExplanation": "100 میلیون و بالاتر"
+  }
+]

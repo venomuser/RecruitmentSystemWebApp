@@ -45,9 +45,6 @@ namespace Entities
         [StringLength(50)]
         public string? TypeOfCooperation { get; set; }
 
-        [StringLength(200)]
-        public string? SalaryAmount { get; set; }
-
         public int? SalaryID { get; set; }
 
         [ForeignKey(nameof(SalaryID))]
