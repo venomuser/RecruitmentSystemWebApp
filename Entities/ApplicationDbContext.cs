@@ -1,5 +1,6 @@
 ﻿using Entities.IdentityEntities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -38,22 +39,53 @@ namespace Entities
 
 
             List<Province> ProvincesSeedData = JsonSerializer.Deserialize<List<Province>>(File.ReadAllText("Provinces.json"));
-            foreach(var province in ProvincesSeedData)
+            foreach (var province in ProvincesSeedData)
             {
                 builder.Entity<Province>().HasData(province);
             }
 
             List<City> CitiesSeedData = JsonSerializer.Deserialize<List<City>>(File.ReadAllText("Cities.json"));
-            foreach(var city in CitiesSeedData)
+            foreach (var city in CitiesSeedData)
             {
                 builder.Entity<City>().HasData(city);
             }
 
             List<SalaryAmount> salaryAmountsSeedData = JsonSerializer.Deserialize<List<SalaryAmount>>(File.ReadAllText("SalaryAmount.json"));
-            foreach(var salary in salaryAmountsSeedData)
+            foreach (var salary in salaryAmountsSeedData)
             {
                 builder.Entity<SalaryAmount>().HasData(salary);
             }
+        }
+
+        public async Task<int> SP_InsertAdvertisement(Advertisement advertisement)
+        {
+            SqlParameter[] sqlParameters = new SqlParameter[] {
+                new SqlParameter("@Id",advertisement.Id),
+                new SqlParameter("@CityId",advertisement.CityId),
+                new SqlParameter("@Gender",advertisement.Gender),
+                new SqlParameter("@MilitaryServiceStatus",advertisement.MilitaryServiceStatus),
+                new SqlParameter("@LeastYearsOfExperience",advertisement.LeastYearsOfExperience),
+                new SqlParameter("@LeastAcademicDegree",advertisement.LeastAcademicDegree),
+                new SqlParameter("@Description",advertisement.Description),
+                new SqlParameter("@Title",advertisement.Title),
+                new SqlParameter("@JobCategoryId",advertisement.JobCategoryId),
+                new SqlParameter("@IsVerified",advertisement.IsVerified),
+                new SqlParameter("@CompanyId",advertisement.CompanyId),
+                new SqlParameter("@NotVerificationDescription",advertisement.NotVerificationDescription),
+                new SqlParameter("@SalaryID",advertisement.SalaryID),
+                new SqlParameter("@TypeOfCooperation",advertisement.TypeOfCooperation)
+            };
+
+            return await Database.ExecuteSqlRawAsync("EXECUTE [dbo].[InsertAdvertisement] @Id, @CityId, @Gender, @MilitaryServiceStatus, @LeastYearsOfExperience, @LeastAcademicDegree, @Description, @Title, @JobCategoryId, @IsVerified, @CompanyId, @NotVerificationDescription, @SalaryID, @TypeOfCooperation");
+        }
+
+        public async Task<Advertisement> SP_GetAdvertisementById(Guid Id)
+        {
+            SqlParameter[] sqlParameters = new SqlParameter[] {
+
+                new SqlParameter("@Id",Id),
+            };
+            return await Advertisements.FromSqlRaw("EXECUTE [dbo].[GetAdvertisementById] @Id", sqlParameters).FirstOrDefaultAsync();
         }
     }
 }
