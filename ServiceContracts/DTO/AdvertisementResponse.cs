@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Entities;
+using ServiceContracts.Enums;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,5 +11,97 @@ namespace ServiceContracts.DTO
 {
     public class AdvertisementResponse
     {
+       
+        public Guid AdvertisementID { get; set; }
+        
+        public long? CityID { get; set; }
+
+      
+        public string? Gender { get; set; }
+
+        public string? MilitaryServiceStatus { get; set; }
+
+        
+        public int? LeastYearsOfExperience { get; set; }
+
+        
+        public string? AcademicDegree { get; set; }
+
+        
+        public string? Description { get; set; }
+
+       
+        public string? Title { get; set; }
+
+     
+        public Guid? JobCategoryID { get; set; }
+
+     
+        public Guid? CompanyID { get; set; }
+
+        
+        public string? CooperationType { get; set; }
+
+      
+        public int? SalaryAmountID { get; set; }
+        public bool? IsVerified { get; set; }
+        public string? NotVerifiedDescription { get; set; }
+
+
+        public AdvertisementCompanyUpdateDTO ToCompanyUpdateDTO()
+        {
+            return new AdvertisementCompanyUpdateDTO()
+            {
+                SalaryAmountID = SalaryAmountID,
+                MilitaryServiceStatus = MilitaryServiceStatus,
+                AcademicDegree = (AcademicDegrees) Enum.Parse(typeof(AcademicDegrees), AcademicDegree, true),
+                Description = Description,
+                Title = Title,
+                JobCategoryID = JobCategoryID,
+                CompanyID = CompanyID,
+                AdvertisementID = AdvertisementID,
+                CityID = CityID,
+                CooperationType = (CooperationTypeOptions) Enum.Parse(typeof(CooperationTypeOptions), CooperationType, true),
+                Gender = (GenderOptions) Enum.Parse(typeof(GenderOptions), Gender, true),
+                LeastYearsOfExperience = LeastYearsOfExperience
+            };
+            
+           
+        }
+
+        public AdvertisementAdminUpdateDTO ToAdminUpdateDTO()
+        {
+            return new AdvertisementAdminUpdateDTO(AdvertisementID, CityID.Value, (GenderOptions)Enum.Parse(typeof(GenderOptions), Gender, true)
+                , MilitaryServiceStatus, LeastYearsOfExperience.Value,
+                (AcademicDegrees)Enum.Parse(typeof(AcademicDegrees), AcademicDegree, true), Description,
+                Title, JobCategoryID.Value, CompanyID.Value, (CooperationTypeOptions)Enum.Parse(typeof(CooperationTypeOptions),
+                CooperationType, true)
+                , SalaryAmountID.Value, IsVerified.Value, NotVerifiedDescription);
+         
+        }
+    }
+
+    public static class AdvertisementExtensions
+    {
+        public static AdvertisementResponse ToAdvertisementResponse(this Advertisement advertisement)
+        {
+            return new AdvertisementResponse
+            {
+                AcademicDegree = advertisement.LeastAcademicDegree,
+                AdvertisementID = advertisement.Id,
+                CityID = advertisement.CityId,
+                CompanyID = advertisement.CompanyId,
+                CooperationType = advertisement.TypeOfCooperation,
+                Description = advertisement.Description,
+                Title = advertisement.Title,
+                Gender = advertisement.Gender,
+                IsVerified = advertisement.IsVerified,
+                JobCategoryID = advertisement.JobCategoryId,
+                LeastYearsOfExperience = advertisement.LeastYearsOfExperience,
+                MilitaryServiceStatus = advertisement.MilitaryServiceStatus,
+                NotVerifiedDescription = advertisement.NotVerificationDescription,
+                SalaryAmountID = advertisement.SalaryID
+            };
+        }   
     }
 }
