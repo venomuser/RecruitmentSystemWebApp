@@ -2,6 +2,7 @@
 using ServiceContracts.DTO;
 using RepositoryContracts;
 using Entities;
+using Services.Helpers;
 
 namespace Services
 {
@@ -66,9 +67,31 @@ namespace Services
             throw new NotImplementedException();
         }
 
-        public Task<JobCategoryResponse> JobUpdateAsync(JobCategoryUpdateRequest jobCategoryUpdateRequest)
+        public async Task<JobCategoryResponse> JobUpdateAsync(JobCategoryUpdateRequest jobCategoryUpdateRequest)
         {
-            throw new NotImplementedException();
+            JobCategory? matchingJobCategory = await _jobCategoryRepository.GetJobCategoryById(jobCategoryUpdateRequest.JobCategoryId);
+            if (matchingJobCategory == null) { 
+              
+                throw new ArgumentException("شناسه دسته بندی درست نمی باشد!");
+            
+            }
+
+            if (jobCategoryUpdateRequest.UserID != matchingJobCategory.UserID)
+            {
+                throw new Exception("شما نمی توانید دسته بندی هایی که توسط اشخاص دیگر ایجاد شده اند را ویرایش کنید!");
+            }
+
+                ValidationHelper.ModelValidation(jobCategoryUpdateRequest);
+
+            
+
+            matchingJobCategory.CategoryName = jobCategoryUpdateRequest.JobCategoryName;
+
+           await _jobCategoryRepository.UpdateJobCategory(matchingJobCategory);
+
+            return matchingJobCategory.ToJobCategoryResponse();
+
+
         }
     }
 }

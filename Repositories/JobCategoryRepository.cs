@@ -56,7 +56,7 @@ namespace Repositories
                 return jobCategory;
             }
 
-            category.CategoryName = jobCategory.CategoryName; category.UserID = jobCategory.UserID;
+            category.CategoryName = jobCategory.CategoryName;
             await _dbContext.SaveChangesAsync();
             return category;
         }
