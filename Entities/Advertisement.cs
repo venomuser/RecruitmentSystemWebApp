@@ -41,5 +41,16 @@ namespace Entities
 
         [StringLength(700)]
         public string? NotVerificationDescription { get; set; }
+
+        [StringLength(50)]
+        public string? TypeOfCooperation { get; set; }
+
+        [StringLength(200)]
+        public string? SalaryAmount { get; set; }
+
+        public int? SalaryID { get; set; }
+
+        [ForeignKey(nameof(SalaryID))]
+        public virtual SalaryAmount? AmountOfSalary { get; set; }
     }
 }
