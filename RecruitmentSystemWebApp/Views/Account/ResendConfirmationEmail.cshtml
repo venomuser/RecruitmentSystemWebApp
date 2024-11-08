@@ -1,0 +1,23 @@
+﻿@{
+    ViewBag.Title = ViewBag.Message;
+}
+
+<h1 class="title is-1">@ViewBag.Message</h1>
+<form class="box" asp-action="ResendConfirmationEmail" asp-controller="Account" method="post">
+    @*Email*@
+    <div class="field">
+        <label class="label" for="email">نشانی ایمیل</label>
+        <div class="control">
+            <input class="input"  type="email" name="email" id="email" placeholder="ایمیل خود را وارد کنید ..." required/>
+           
+        </div>
+    </div>
+
+    @*Button*@
+    <div class="field">
+        <div class="control">
+            <button class="button is-link" type="submit">@ViewBag.Message</button>
+
+        </div>
+    </div>
+</form>

@@ -9,7 +9,6 @@ namespace RecruitmentSystemWebApp.Controllers
     {
         [Route("[action]")]
         [Route("/")]
-        
         public async Task<IActionResult> Home()
         {
             return View();

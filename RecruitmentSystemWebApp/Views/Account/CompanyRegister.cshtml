@@ -1,0 +1,71 @@
+﻿@model CompanyRegisterDTO
+@{
+    ViewBag.Title = "ثبت نام شرکت";
+}
+
+<h1 class="title is-4">ثبت نام شرکت / مؤسسه</h1>
+<form class="box" asp-controller="Account" asp-action="CompanyRegister" method="post">
+
+    @*Company Name*@
+    <div class="field">
+        <label class="label" asp-for="CompanyName">نام شرکت / مؤسسه</label>
+        <div class="control">
+            <input class="input" asp-for="CompanyName" />
+            <span asp-validation-for="CompanyName" class="is-danger" style="color: red"></span>
+        </div>
+    </div>
+
+
+    @*Company Email*@
+    <div class="field">
+        <label class="label" asp-for="CompanyEmail">نشانی ایمیل شرکت / مؤسسه</label>
+        <div class="control">
+            <input class="input" asp-for="CompanyEmail" />
+            <span asp-validation-for="CompanyEmail" class="is-danger" style="color: red"></span>
+        </div>
+    </div>
+
+    @*Company Phone*@
+    <div class="field">
+        <label class="label" asp-for="CompanyPhone">شماره تلفن شرکت / مؤسسه</label>
+        <div class="control">
+            <input class="input" asp-for="CompanyPhone" type="tel"/>
+            <span asp-validation-for="CompanyPhone" class="is-danger" style="color: red"></span>
+        </div>
+    </div>
+
+    @*Password*@
+    <div class="field">
+        <label class="label" asp-for="Password">رمز عبور</label>
+        <div class="control">
+            <input class="input" asp-for="Password"/>
+            <span asp-validation-for="Password" class="is-danger" style="color: red"></span>
+        </div>
+    </div>
+
+    @*Confirm Password*@
+    <div class="field">
+        <label class="label" asp-for="ConfirmPassword">تکرار رمز عبور</label>
+        <div class="control">
+            <input class="input" asp-for="ConfirmPassword" />
+            <span asp-validation-for="ConfirmPassword" class="is-danger" style="color: red"></span>
+        </div>
+    </div>
+
+    @*Register Button*@
+    <div class="field">
+        <div class="control">
+            <button class="button is-success" type="submit">ثبت نام</button>
+
+            <div asp-validation-summary="All" style="color: red" class="is-danger"></div>
+
+            
+        </div>
+    </div>
+</form>
+
+@section scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer" asp-fallback-test="window.jQuery" asp-fallback-src="~/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.21.0/jquery.validate.min.js" integrity="sha512-KFHXdr2oObHKI9w4Hv1XPKc898mE4kgYx58oqsc/JqqdLMDI4YjOLzom+EMlW8HFUd0QfjfAvxSL6sEq/a42fQ==" crossorigin="anonymous" referrerpolicy="no-referrer" asp-fallback-test="window.jQuery.validator" asp-fallback-src="~/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/4.0.0/jquery.validate.unobtrusive.min.js" integrity="sha512-xq+Vm8jC94ynOikewaQXMEkJIOBp7iArs3IhFWSWdRT3Pq8wFz46p+ZDFAR7kHnSFf+zUv52B3prRYnbDRdgog==" crossorigin="anonymous" referrerpolicy="no-referrer" asp-fallback-test="window.jQuery.validator.unobtrusive" asp-fallback-src="~/jquery.validate.unobtrusive.min.js"></script>
+}

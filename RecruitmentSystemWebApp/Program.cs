@@ -22,7 +22,7 @@ builder.Services.AddScoped<IJobCategoryRepository, JobCategoryRepository>();
 builder.Services.AddScoped<IAdvertisementRepository, AdvertisementRepository>();
 builder.Services.AddScoped<IJobCategoryService, JobCategoryService>();
 builder.Services.AddScoped<IAdvertisementService, AdvertisementService>();
-
+builder.Services.AddTransient<ISenderEmail, EmailSender>();
 
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -71,5 +71,18 @@ app.MapControllers();
 
 
 //Conventional Touting
+app.UseEndpoints(endpoints => {
+
+   /* endpoints.MapControllerRoute(
+           name: "areas",
+           pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+         );
+   */
+
+    endpoints.MapControllerRoute(
+       name: "default",
+       pattern: "{controller}/{action}/{id?}"
+       );
+});
 
 app.Run();
