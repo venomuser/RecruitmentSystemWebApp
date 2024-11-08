@@ -4,6 +4,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Repositories;
+using RepositoryContracts;
+using ServiceContracts;
+using Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +17,10 @@ builder.Services.AddControllersWithViews(options =>
 });
 
 //Services Here
-
+builder.Services.AddScoped<IJobCategoryRepository, JobCategoryRepository>();
+builder.Services.AddScoped<IAdvertisementRepository, AdvertisementRepository>();
+builder.Services.AddScoped<IJobCategoryService, JobCategoryService>();
+builder.Services.AddScoped<IAdvertisementService, AdvertisementService>();
 
 
 
@@ -35,6 +42,16 @@ if (app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
 }
 
+app.UseHsts();
+app.UseHttpsRedirection();
+app.UseStaticFiles();
 
+app.UseRouting();
+
+
+app.MapControllers();
+
+
+//Conventional Touting
 
 app.Run();
