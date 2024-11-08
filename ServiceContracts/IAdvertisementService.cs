@@ -15,28 +15,28 @@ namespace ServiceContracts
         /// </summary>
         /// <param name="adReqest">Advertisement Addition DTO</param>
         /// <returns>AdvertisementResponse object which has been added in this method</returns>
-        Task<AdvertisementResponse> AddAdvertisement(AdvertisementAddRequest? adReqest);
+        Task<AdvertisementResponse?> AddAdvertisement(AdvertisementAddRequest? adReqest);
 
         /// <summary>
         /// Advertisement modification that the Company has accopolished
         /// </summary>
         /// <param name="companyAdUpdate">AdvertisementUpdateDTO, specified for company</param>
         /// <returns></returns>
-        Task<AdvertisementResponse> UpdateAvertisementByCompany(AdvertisementCompanyUpdateDTO companyAdUpdate);
+        Task<AdvertisementResponse?> UpdateAvertisementByCompany(AdvertisementCompanyUpdateDTO? companyAdUpdate);
 
         /// <summary>
         /// Admin can only confirm or reject the added or modified advertisement
         /// </summary>
         /// <param name="adminAdUpdate">An advertisement DTO provided for Admin to confirm or reject</param>
         /// <returns>Object of this which modified by Admin</returns>
-        Task<AdvertisementResponse> UpdateAdvertisementByAdmin(AdvertisementAdminUpdateDTO adminAdUpdate);
+        Task<AdvertisementResponse?> UpdateAdvertisementByAdmin(AdvertisementAdminUpdateDTO? adminAdUpdate);
 
         /// <summary>
         /// Advertisement deletion, by company exactly.
         /// </summary>
         /// <param name="adID">ID of the advertisement which is supposed to be deleted</param>
         /// <returns>True if dleted. Otherwise, false</returns>
-        Task<bool> RemoveAdvertisement(Guid adID);
+        Task<bool> RemoveAdvertisement(Guid? adID);
 
         /// <summary>
         /// Ultimaetely approved advertisements to be shown in the main page of the web app
@@ -62,14 +62,15 @@ namespace ServiceContracts
         /// </summary>
         /// <param name="Id">ID of the specific advertisement</param>
         /// <returns>An object of AdvertsiementResponse which mathces with the given ID</returns>
-        Task<AdvertisementResponse> GetAdvertisementByID(Guid? Id);
+        Task<AdvertisementResponse?> GetAdvertisementByID(Guid? Id);
 
         /// <summary>
         /// Visitor's wanted topic to search ads. Either in title or in description of ads.
         /// </summary>
         /// <param name="searchTerm">Visitor's wanted topic to search</param>
+        /// <param name="adList">The list of ads that will be searched within</param>
         /// <returns>List of searched ads</returns>
-        Task<List<AdvertisementResponse>> GetSearchedAdvertisements(string? searchTerm);
+        Task<List<AdvertisementResponse>> GetSearchedAdvertisements(List<AdvertisementResponse> adList, string? searchTerm);
 
         /// <summary>
         /// Filtered Ads that may have multiple filters
