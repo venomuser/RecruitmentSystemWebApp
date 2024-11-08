@@ -31,15 +31,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\" />
-    <Folder Include="Areas\CompanyArea\Controllers\" />
     <Folder Include="Areas\CompanyArea\Data\" />
     <Folder Include="Areas\CompanyArea\Models\" />
-    <Folder Include="Areas\CompanyArea\Views\" />
-    <Folder Include="Areas\SiteAdmin\Controllers\" />
     <Folder Include="Areas\SiteAdmin\Data\" />
     <Folder Include="Areas\SiteAdmin\Models\" />
-    <Folder Include="Areas\SiteAdmin\Views\" />
   </ItemGroup>
 
 </Project>

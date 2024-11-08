@@ -7,7 +7,7 @@
     <title>@ViewBag.Title</title>
 </head>
 <body>
-    <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
+    <nav class="navbar is-link" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
            
                <img src="~/logo.png" width="100px" height="100px" />
@@ -23,8 +23,12 @@
 
         <div id="NavItems" class="navbar-menu">
             <div class="navbar-start">
-                <a class="navbar-item" asp-controller="General" asp-action="Home">
+                <a class="navbar-item" asp-controller="General" asp-action="Home" asp-area="">
                     <b>صفحه اصلی</b>
+                </a>
+               
+                <a class="navbar-item" asp-controller="Admin" asp-action="ControlAds">
+                    <b>آگهی های در صف بررسی</b>
                 </a>
 
                
@@ -36,33 +40,12 @@
                     <div class="buttons">
                         @if (User.Identity.IsAuthenticated)
                         {
-                            <a class="button is-link" asp-action="Logout" asp-controller="Account">
+                            <a class="button is-link" asp-action="Logout" asp-controller="Account" asp-area="">
                                 <strong>خروج</strong>
                             </a>
-                            if (User.IsInRole("CompanyUser"))
-                            {
-                                <a asp-action="CompanyPanel" asp-controller="Home" asp-area="CompanyArea">@User.Identity.Name
-                                    @if(ViewBag.Avatar != null){
-                                        <img src="@ViewBag.Avatar" width="50px" height="50px" />
-                                    }
-                                </a>
-                                
-                            }
-                            else if (User.IsInRole("SiteAdmin"))
-                            {
-                                <a asp-action="AdminPanel" asp-controller="Admin" asp-area="SiteAdmin">@User.Identity.Name</a>
-                            }
-
+                            <a>@User.Identity.Name</a>
                         }
-                        else
-                        {
-                            <a class="button is-link" asp-controller="Account" asp-action="AdminOrCompany">
-                                <strong>ثبت نام</strong>
-                            </a>
-                            <a class="button is-info">
-                                ورود
-                            </a>
-                        }
+                        
                         
                     </div>
                 </div>

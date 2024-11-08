@@ -58,6 +58,7 @@ namespace RecruitmentSystemWebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> CompanyRegister(CompanyRegisterDTO registerDTO)
         {
+
             if (ModelState.IsValid)
             {
                 var companyUser = new Company()
@@ -71,7 +72,7 @@ namespace RecruitmentSystemWebApp.Controllers
                 var result = await _userManager.CreateAsync(companyUser, registerDTO.Password);
                 if (result.Succeeded)
                 {
-                    if(await _roleManager.FindByNameAsync("CompanyUser") is null)
+                    if (await _roleManager.FindByNameAsync("CompanyUser") is null)
                     {
                         ApplicationRole applicationRole = new()
                         {
@@ -154,7 +155,7 @@ namespace RecruitmentSystemWebApp.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-       
+
         public async Task<IActionResult> ResendConfirmationEmail(string Email)
         {
             var user = await _userManager.FindByEmailAsync(Email);
@@ -171,5 +172,156 @@ namespace RecruitmentSystemWebApp.Controllers
             return View("ConfirmationEmailSent");
         }
 
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction(nameof(GeneralController.Home), "General");
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "CompanyUser")]
+        public async Task<IActionResult> CompanyEdit(string? UserEmail)
+        {
+            if (UserEmail == null)
+            {
+                return RedirectToAction(nameof(GeneralController.Home), "General");
+            }
+            Company user = (Company)await _userManager.FindByEmailAsync(UserEmail);
+            if (user == null)
+            {
+                return RedirectToAction(nameof(GeneralController.Home), "General");
+            }
+
+            var userUpdate = new CompanyEditDTO()
+            {
+                UserId = user.Id,
+                CompanyEmail = user.Email,
+                CompanyName = user.CompanyName,
+                CompanyPhone = user.PhoneNumber,
+
+            };
+            return View(userUpdate);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "CompanyUser")]
+        public async Task<IActionResult> CompanyEdit(CompanyEditDTO companyEditDTO, IFormFile? formFile)
+        {
+            if (companyEditDTO == null)
+            {
+                return BadRequest("مشکلی پیش آمده است");
+            }
+            Company user = (Company)await _userManager.FindByIdAsync(companyEditDTO.UserId.Value.ToString());
+            if (user == null)
+            {
+                return BadRequest("چنین کاربری پیدا نشد");
+            }
+
+            user.Email = companyEditDTO.CompanyEmail;
+            user.UserName = companyEditDTO.CompanyEmail;
+            user.CompanyAddress = companyEditDTO.CompanyAddress;
+            user.PhoneNumber = companyEditDTO.CompanyPhone;
+            user.CompanyName = companyEditDTO.CompanyName;
+            user.CompanyDescription = companyEditDTO.CompanyDescription;
+
+            if (formFile != null)
+            {
+                if (!Directory.Exists(@"C:\AppUploads"))
+                {
+                    Directory.CreateDirectory(@"C:\AppUploads");
+                }
+                Guid avatarName = Guid.NewGuid();
+                var fileExtension = Path.GetExtension(formFile.FileName);
+                var filePath = Path.Combine(@"C:\AppUploads", avatarName.ToString() + fileExtension);
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await formFile.CopyToAsync(stream);
+                }
+                user.AvatarAddress = filePath;
+            }
+            var result = await _userManager.UpdateAsync(user);
+            if (result.Succeeded)
+            {
+                //Once user data updated redirect to the ListUsers view
+                return RedirectToAction("CompanyPanel", "Home", new { area = "CompanyArea" });
+            }
+            else
+            {
+                //In case any error, stay in the same view and show the model validation error
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+
+                return View(companyEditDTO);
+            }
+        }
+
+        [HttpGet]
+        [Authorize("NoAccessForAuth")]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Authorize("NoAccessForAuth")]
+        public async Task<IActionResult> Login(LoginDTO loginDTO)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _signInManager.PasswordSignInAsync(loginDTO.Email, loginDTO.Password, isPersistent: false, lockoutOnFailure: false);
+                if (result.Succeeded)
+                {
+
+                }
+            }
+            return View();
+        }
+
+        [HttpGet]
+        [Authorize("NoAccessForAuth")]
+        public IActionResult AdminRegister()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Authorize("NoAccessForAuth")]
+        public async Task<IActionResult> AdminRegister(AdminRegisterDTO adminRegisterDTO)
+        {
+            if (ModelState.IsValid)
+            {
+                SiteAdministrator admin = new()
+                {
+                    AdminName = adminRegisterDTO.AdminActualName,
+                    Email = adminRegisterDTO.AdminEmail
+                };
+
+                var result = await _userManager.CreateAsync(admin, adminRegisterDTO.Password);
+                if (result.Succeeded)
+                {
+                    if (await _roleManager.FindByNameAsync("SiteAdmin") is null)
+                    {
+                        ApplicationRole applicationRole = new()
+                        {
+                            Name = "SiteAdmin"
+                        };
+                        await _roleManager.CreateAsync(applicationRole);
+                    }
+
+                    await _userManager.AddToRoleAsync(admin, "SiteAdmin");
+
+                    return RedirectToAction("AdminPanel", "Admin", new { area = "SiteAdmin" });
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+            }
+
+            return View(adminRegisterDTO);
+        }
     }
 }
