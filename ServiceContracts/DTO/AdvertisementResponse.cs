@@ -46,6 +46,11 @@ namespace ServiceContracts.DTO
         public int? SalaryAmountID { get; set; }
         public bool? IsVerified { get; set; }
         public string? NotVerifiedDescription { get; set; }
+        public string? AvatarAddress { get; set; }
+        public string? CompanyName { get; set; }
+        public string? Salary {  get; set; }
+        public string? JobCategoryName { get; set; }
+        public string? CityName { get; set; }
 
 
         public AdvertisementCompanyUpdateDTO ToCompanyUpdateDTO()
@@ -100,7 +105,12 @@ namespace ServiceContracts.DTO
                 LeastYearsOfExperience = advertisement.LeastYearsOfExperience,
                 MilitaryServiceStatus = advertisement.MilitaryServiceStatus,
                 NotVerifiedDescription = advertisement.NotVerificationDescription,
-                SalaryAmountID = advertisement.SalaryID
+                SalaryAmountID = advertisement.SalaryID,
+                CompanyName = advertisement.Company?.CompanyName,
+                AvatarAddress = advertisement.Company?.AvatarAddress,
+                Salary = advertisement.SalaryAmount?.SalaryExplanation,
+                JobCategoryName = advertisement.JobCategory?.CategoryName,
+                CityName = advertisement.City?.CityName
             };
         }   
     }

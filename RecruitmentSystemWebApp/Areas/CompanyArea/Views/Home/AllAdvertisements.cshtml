@@ -1,0 +1,70 @@
+﻿@model IEnumerable<AdvertisementResponse>
+
+
+<div class="tabs is-centered">
+    <ul>
+        <li><a asp-action="AddCategories" asp-controller="Home">ایجاد دسته بندی شغلی</a></li>
+        <li><a asp-action="EditCategories" asp-controller="Home">ویرایش دسته بندی شغلی</a></li>
+        <li><a asp-action="AddAdvertisement" asp-controller="Home">ایجاد آگهی استخدام</a></li>
+        <li class="is-active"><a asp-action="AllAdvertisements" asp-controller="Home">مشاهده آگهی های ایجاد شده</a></li>
+    </ul>
+</div>
+
+<h2 class="title is-2">همه آگهی های ایجاد شده</h2>
+
+@foreach(var item in Model)
+{
+    <div class="card">
+       
+        <div class="card-content">
+            <div class="media">
+                <div class="media-left">
+                    <figure class="image is-48x48">
+                        @if(item.AvatarAddress != null)
+                        {
+                            <img src="@item.AvatarAddress"
+                                 alt="لوگوی شرکت" />
+                        }
+                        else{
+                        <img src="https://bulma.io/assets/images/placeholders/96x96.png"
+                             alt="Placeholder image" />
+                        }
+                    </figure>
+                </div>
+                <div class="media-content">
+                    <p class="title is-4">@item.Title</p>
+                    <p class="subtitle is-6">@item.CompanyName</p>
+                </div>
+            </div>
+
+            <div class="content">
+                @if(item.Description.Count() > 100)
+                {
+                    
+                        string a = "";
+                        a = item.Description.Substring(0, 50) + "...";
+                    
+                    @a
+                }
+                else
+                {
+                    @item.Description
+                }
+            
+                @if(item.IsVerified == null)
+                {
+                    <div class="button is-warning">در حال بررسی</div>
+                }
+                else if (item.IsVerified == false)
+                {
+                    <div class="button is-danger">رد شده</div>
+                }
+
+                else if (item.IsVerified == true)
+                {
+                    <div class="button is-success">منتشر شده</div>
+                }
+            </div>
+        </div>
+    </div>
+}

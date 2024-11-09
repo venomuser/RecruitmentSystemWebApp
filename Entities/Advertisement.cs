@@ -48,6 +48,6 @@ namespace Entities
         public int? SalaryID { get; set; }
 
         [ForeignKey(nameof(SalaryID))]
-        public virtual SalaryAmount? AmountOfSalary { get; set; }
+        public virtual SalaryAmount? SalaryAmount { get; set; }
     }
 }

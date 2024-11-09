@@ -29,7 +29,7 @@
                 <a class="navbar-item" asp-controller="Account" asp-action="CompanyEdit" asp-area="" asp-route-UserEmail="@User.Identity.Name">
                     <b>ویرایش پروفایل</b>
                 </a>
-                <a class="navbar-item" asp-controller="Home" asp-action="AdsSection">
+                <a class="navbar-item" asp-controller="Home" asp-action="AllAdvertisements">
                     <b>آگهی های ما</b>
                 </a>
 
@@ -56,6 +56,7 @@
     </nav>
     <section class="section">
     <div class="container">
+        @RenderSection("tabs", required: false)
         @RenderBody()
     </div>
     </section>

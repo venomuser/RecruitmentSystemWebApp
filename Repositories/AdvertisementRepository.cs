@@ -36,25 +36,25 @@ namespace Repositories
             // return await _dbContext.SP_GetAdvertisementById(Id);
 
 
-            return await _dbContext.Advertisements.Include("Company").Include("City").Include("JobCategory").Include("Province")
+            return await _dbContext.Advertisements.Include("Company").Include("City").Include("JobCategory")
                   .Include("SalaryAmount").FirstOrDefaultAsync(temp => temp.Id == Id);
         }
 
         public async Task<List<Advertisement>> GetAdvertisementsByCompanyID(Guid companyID)
         {
-            return await _dbContext.Advertisements.Include("Company").Include("City").Include("JobCategory").Include("Province")
+            return await _dbContext.Advertisements.Include("Company").Include("City").Include("JobCategory")
                   .Include("SalaryAmount").Where(temp => temp.CompanyId == companyID).ToListAsync();
         }
 
         public async Task<List<Advertisement>> GetNotVerifiedAdvertisements()
         {
-            return await _dbContext.Advertisements.Include("Company").Include("City").Include("JobCategory").Include("Province")
+            return await _dbContext.Advertisements.Include("Company").Include("City").Include("JobCategory")
                   .Include("SalaryAmount").Where(temp => temp.IsVerified == null).ToListAsync();
         }
 
         public async Task<List<Advertisement>> GetVerifiedAdvertisements()
         {
-            return await _dbContext.Advertisements.Include("Company").Include("City").Include("JobCategory").Include("Province")
+            return await _dbContext.Advertisements.Include("Company").Include("City").Include("JobCategory")
                    .Include("SalaryAmount").Where(temp => temp.IsVerified == true).ToListAsync();
         }
 
