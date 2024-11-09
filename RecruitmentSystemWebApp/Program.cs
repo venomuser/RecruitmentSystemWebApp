@@ -50,7 +50,7 @@ builder.Services.AddAuthorization(options =>
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
-    options.LoginPath = "/Account/login";
+    options.LoginPath = "/Account/Login";
 });
 
 var app = builder.Build();

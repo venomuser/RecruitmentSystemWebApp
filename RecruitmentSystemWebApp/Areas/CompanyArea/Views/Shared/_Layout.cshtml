@@ -42,10 +42,10 @@
                     <div class="buttons">
                         @if (User.Identity.IsAuthenticated)
                         {
-                            <a class="button is-link" asp-action="Logout" asp-controller="Account" asp-area="">
+                            <a class="button is-danger" asp-action="Logout" asp-controller="Account" asp-area="">
                                 <strong>خروج</strong>
                             </a>
-                            <a>@User.Identity.Name</a>
+                            <a class="is-warning" style="color: yellow">@User.Identity.Name</a>
                         }
                         
                         

@@ -25,7 +25,7 @@ namespace RecruitmentSystemWebApp.Controllers
             {
                 if (User.IsInRole("CompanyUser"))
                 {
-                    Company company = (Company) await _userManager.FindByIdAsync(User.Identity.Name);
+                    Company company = (Company) await _userManager.FindByNameAsync(User.Identity.Name);
                     ViewBag.Avatar = company.AvatarAddress;
                 }
             }
