@@ -1,18 +1,12 @@
-﻿@model AdvertisementAddRequest
+﻿@model AdvertisementCompanyUpdateDTO
+@{
+    ViewBag.Title = "ویرایش آگهی";
+}
 
-<div class="tabs is-centered">
-    <ul>
-        <li><a asp-action="AddCategories" asp-controller="Home">ایجاد دسته بندی شغلی</a></li>
-        <li><a asp-action="EditCategories" asp-controller="Home">ویرایش دسته بندی شغلی</a></li>
-        <li class="is-active"><a asp-action="AddAdvertisement" asp-controller="Home">ایجاد آگهی استخدام</a></li>
-        <li><a asp-action="AllAdvertisements" asp-controller="Home">مشاهده آگهی های ایجاد شده</a></li>
-    </ul>
-</div>
+<h1 class="title is-4">ویرایش آگهی</h1>
+<form class="box" asp-controller="Home" asp-action="EditAdvertisement" method="post">
 
-<h1 class="title is-4">ایجاد آگهی</h1>
-<form class="box" asp-controller="Home" asp-action="AddAdvertisement" method="post">
-
-
+    <input type="hidden" asp-for="@Model.AdvertisementID" />
 
 
     @*Title*@
@@ -69,7 +63,7 @@
                 <option value="">استان مربوطه را انتخاب کنید</option>
 
             </select>
-            
+
         </div>
     </div>
     @*City*@
@@ -95,7 +89,7 @@
             <span asp-validation-for="SalaryAmountID" class="is-danger" style="color: red"></span>
         </div>
     </div>
-    
+
 
     @{
         var genderOptions = Enum.GetValues(typeof(GenderOptions)).Cast<GenderOptions>();
@@ -137,11 +131,11 @@
         </div>
     </div>
 
-    
 
-    
 
-    
+
+
+
 
     @{
         var academicDegrees = Enum.GetValues(typeof(AcademicDegrees)).Cast<AcademicDegrees>();
@@ -179,7 +173,7 @@
     @*Submit Button*@
     <div class="field">
         <div class="control">
-            <button class="button is-primary" type="submit">ثبت آگهی</button>
+            <button class="button is-warning" type="submit">ثبت ویرایش آگهی</button>
 
             <div asp-validation-summary="All" style="color: red" class="is-danger"></div>
 
@@ -188,7 +182,7 @@
     </div>
 </form>
 
-@section fetchJS{
+@section fetchJS {
     <script>
         document.getElementById("ProvinceID").addEventListener("change", function () {
             var provinceId = this.value;

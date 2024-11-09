@@ -23,7 +23,7 @@ namespace ServiceContracts.DTO
 
         }
 
-        public Guid AdvertisementID { get; }
+        public Guid AdvertisementID { get; set; }
 
         public long? CityID { get; }
 

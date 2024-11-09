@@ -36,7 +36,7 @@ namespace ServiceContracts.DTO
         [Required(ErrorMessage = "دسته بندی شغلی این آگهی باید مشخص باشد")]
         public Guid? JobCategoryID { get; set; }
 
-        [Required(ErrorMessage = "شرکت ثبت کننده آگهی باید مشخص باشد")]
+        //[Required(ErrorMessage = "شرکت ثبت کننده آگهی باید مشخص باشد")]
         public Guid? CompanyID { get; set; }
 
         [Required(ErrorMessage = "نوع همکاری باید مشخص باشد")]

@@ -52,7 +52,7 @@ namespace RecruitmentSystemWebApp.Areas.CompanyArea.Controllers
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByEmailAsync(User.Identity?.Name);
-                if(user != null)
+                if (user != null)
                 {
                     request.UserID = user.Id;
                 }
@@ -91,7 +91,7 @@ namespace RecruitmentSystemWebApp.Areas.CompanyArea.Controllers
                 ViewBag.Categories = await _jobCategoryService.GetJobCategoryByCompanyId(user.Id);
                 return View();
             }
-            
+
         }
 
         [HttpPost]
@@ -100,11 +100,11 @@ namespace RecruitmentSystemWebApp.Areas.CompanyArea.Controllers
             var user = await _userManager.FindByEmailAsync(User.Identity?.Name);
             if (ModelState.IsValid)
             {
-                
+
                 if (user != null)
                 {
                     request.UserID = user.Id;
-                    
+
                 }
                 else
                 {
@@ -149,7 +149,7 @@ namespace RecruitmentSystemWebApp.Areas.CompanyArea.Controllers
             List<SalaryResponse> salaries = await _locationService.GetAllSalaryCases();
             ViewBag.Salaries = salaries.Select(temp => new SelectListItem()
             {
-                Text=temp.SalaryName,
+                Text = temp.SalaryName,
                 Value = temp.SalaryId.ToString()
             });
 
@@ -195,14 +195,14 @@ namespace RecruitmentSystemWebApp.Areas.CompanyArea.Controllers
                 }
 
                 AdvertisementResponse? response = await _advertisementService.AddAdvertisement(advertisementAdd);
-                if(response == null)
+                if (response == null)
                 {
                     ModelState.AddModelError(string.Empty, "خطا در ثبت آگهی!");
                     return View(advertisementAdd);
                 }
                 else
                 {
-                    return RedirectToAction(nameof(CompanyPanel), "Home", new {area = "CompanyArea"});
+                    return RedirectToAction(nameof(CompanyPanel), "Home", new { area = "CompanyArea" });
                 }
             }
 
@@ -211,6 +211,201 @@ namespace RecruitmentSystemWebApp.Areas.CompanyArea.Controllers
         }
 
 
+        public async Task<IActionResult> ReviewAdvertisement(Guid? Ad)
+        {
+            if (Ad == null)
+            {
+                return NotFound();
+            }
+            Company user = (Company)await _userManager.FindByNameAsync(User.Identity?.Name);
+            if (user == null)
+            {
+                return RedirectToAction(nameof(CompanyPanel), "Home");
+            }
+            AdvertisementResponse? response = await _advertisementService.GetAdvertisementByID(Ad);
+            if (response == null)
+            {
+                return NotFound();
+            }
+            if (response.CompanyID != user.Id)
+            {
+                return RedirectToAction(nameof(CompanyPanel), "Home");
+            }
+
+            return View(response);
+
+
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditAdvertisement(Guid? Id)
+        {
+            if (Id == null)
+            {
+                return NotFound();
+            }
+            Company user = (Company)await _userManager.FindByNameAsync(User.Identity?.Name);
+            if (user == null)
+            {
+                return RedirectToAction(nameof(CompanyPanel), "Home");
+            }
+            AdvertisementResponse? response = await _advertisementService.GetAdvertisementByID(Id);
+            if (response == null)
+            {
+                return NotFound();
+            }
+            if (response.CompanyID != user.Id)
+            {
+                return RedirectToAction(nameof(CompanyPanel), "Home");
+            }
+
+            List<ProvinceResponse> provinces = await _locationService.GetAllProvinces();
+            ViewBag.AllProvinces = provinces.Select(temp => new SelectListItem()
+            {
+                Text = temp.ProvinceName,
+                Value = temp.ProvinceId.ToString()
+            });
+
+            List<SalaryResponse> salaries = await _locationService.GetAllSalaryCases();
+            ViewBag.Salaries = salaries.Select(temp => new SelectListItem()
+            {
+                Text = temp.SalaryName,
+                Value = temp.SalaryId.ToString()
+            });
+
+            List<JobCategoryResponse?> jobCategories = await _jobCategoryService.GetAllJobsAsync();
+            ViewBag.JobCategories = jobCategories.Select(temp => new SelectListItem()
+            {
+                Text = temp?.CategoryName,
+                Value = temp?.CategoryId.ToString()
+            });
+
+            AdvertisementCompanyUpdateDTO updateDTO = response.ToCompanyUpdateDTO();
+            return View(updateDTO);
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditAdvertisement(AdvertisementCompanyUpdateDTO updateDTO)
+        {
+            if (updateDTO.AdvertisementID == null)
+            {
+                return NotFound();
+            }
+            Company user = (Company)await _userManager.FindByNameAsync(User.Identity?.Name);
+            if (user == null)
+            {
+                return RedirectToAction(nameof(CompanyPanel), "Home");
+            }
+            AdvertisementResponse? response = await _advertisementService.GetAdvertisementByID(updateDTO.AdvertisementID);
+            if (response == null)
+            {
+                return NotFound();
+            }
+            if (response.CompanyID != user.Id)
+            {
+                return RedirectToAction(nameof(CompanyPanel), "Home");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                List<ProvinceResponse> provinces = await _locationService.GetAllProvinces();
+                ViewBag.AllProvinces = provinces.Select(temp => new SelectListItem()
+                {
+                    Text = temp.ProvinceName,
+                    Value = temp.ProvinceId.ToString()
+                });
+
+                List<SalaryResponse> salaries = await _locationService.GetAllSalaryCases();
+                ViewBag.Salaries = salaries.Select(temp => new SelectListItem()
+                {
+                    Text = temp.SalaryName,
+                    Value = temp.SalaryId.ToString()
+                });
+
+                List<JobCategoryResponse?> jobCategories = await _jobCategoryService.GetAllJobsAsync();
+                ViewBag.JobCategories = jobCategories.Select(temp => new SelectListItem()
+                {
+                    Text = temp?.CategoryName,
+                    Value = temp?.CategoryId.ToString()
+                });
+
+
+                return View(updateDTO);
+            }
+            else
+            {
+                AdvertisementResponse? updateResponse = await _advertisementService.UpdateAvertisementByCompany(updateDTO);
+                if (response == null)
+                {
+                    ModelState.AddModelError(string.Empty, "خطا در ثبت آگهی!");
+                    return View(updateDTO);
+                }
+                else
+                {
+                    return RedirectToAction(nameof(CompanyPanel), "Home");
+                }
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DeleteAdvertisement(Guid? RemoveAd)
+        {
+            if (RemoveAd == null)
+            {
+                return NotFound();
+            }
+            Company user = (Company)await _userManager.FindByNameAsync(User.Identity?.Name);
+            if (user == null)
+            {
+                return RedirectToAction(nameof(CompanyPanel), "Home");
+            }
+            AdvertisementResponse? response = await _advertisementService.GetAdvertisementByID(RemoveAd);
+            if (response == null)
+            {
+                return NotFound();
+            }
+            if (response.CompanyID != user.Id)
+            {
+                return RedirectToAction(nameof(CompanyPanel), "Home");
+            }
+
+            return View(response);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteAdvertisement(AdvertisementCompanyUpdateDTO updateDTO)
+        {
+            if (updateDTO.AdvertisementID == null)
+            {
+                return NotFound();
+            }
+            Company user = (Company)await _userManager.FindByNameAsync(User.Identity?.Name);
+            if (user == null)
+            {
+                return RedirectToAction(nameof(CompanyPanel), "Home");
+            }
+            AdvertisementResponse? response = await _advertisementService.GetAdvertisementByID(updateDTO.AdvertisementID);
+            if (response == null)
+            {
+                return NotFound();
+            }
+            if (response.CompanyID != user.Id)
+            {
+                return RedirectToAction(nameof(CompanyPanel), "Home");
+            }
+
+            bool isDeleted = await _advertisementService.RemoveAdvertisement(updateDTO.AdvertisementID);
+            if (isDeleted)
+            {
+                return RedirectToAction(nameof(AllAdvertisements), "Home");
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "خطا در حذف آگهی!");
+                return View(response);
+            }
+        }
 
 
 

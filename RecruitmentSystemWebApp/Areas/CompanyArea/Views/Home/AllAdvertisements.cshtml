@@ -14,10 +14,12 @@
 
 @foreach(var item in Model)
 {
+    
     <div class="card">
        
         <div class="card-content">
             <div class="media">
+                <a asp-action="ReviewAdvertisement" asp-controller="Home" asp-route-Ad="@item.AdvertisementID">
                 <div class="media-left">
                     <figure class="image is-48x48">
                         @if(item.AvatarAddress != null)
@@ -35,6 +37,7 @@
                     <p class="title is-4">@item.Title</p>
                     <p class="subtitle is-6">@item.CompanyName</p>
                 </div>
+                </a>
             </div>
 
             <div class="content">
@@ -67,4 +70,5 @@
             </div>
         </div>
     </div>
+    
 }

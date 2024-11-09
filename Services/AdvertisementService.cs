@@ -152,7 +152,7 @@ namespace Services
             advertisement.Description = companyAdUpdate.Description; advertisement.Gender = companyAdUpdate.Gender.ToString();
             advertisement.TypeOfCooperation = companyAdUpdate.CooperationType.ToString();
             advertisement.JobCategoryId = companyAdUpdate.JobCategoryID; advertisement.MilitaryServiceStatus = companyAdUpdate.MilitaryServiceStatus;
-            advertisement.EditionStatus = companyAdUpdate.EditionStatus;
+            advertisement.EditionStatus = Guid.NewGuid();
 
             await _advertisementRepository.UpdateAdvertisement(advertisement);
             return advertisement.ToAdvertisementResponse();

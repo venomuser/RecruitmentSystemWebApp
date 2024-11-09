@@ -1,0 +1,23 @@
+﻿@model AdvertisementResponse
+@{
+    ViewBag.Title = "حذف آگهی";
+}
+
+<h1 class="title is-1">حذف آگهی</h1>
+<h2 class="title is-2 is-danger">آیا واقعاً تمایل به حذف این آگهی دارید؟</h2>
+<h4 class="title is-4">@Model.Title</h4>
+<p>@Model.Description</p>
+
+<div class="field is-grouped">
+    
+<form asp-action="DeleteAdvertisement" asp-controller="Home" method="post">
+    <input type="hidden" asp-for="AdvertisementID" />
+        <div asp-validation-summary="All" style="color: red" class="is-danger"></div>
+        <div class="control">
+    <button type="submit" class="button is-danger">حذف آگهی</button>
+    </div>
+</form>
+    <div class="control">
+    <a  asp-action="AllAdvertisements" asp-controller="Home" class="button is-info">انصراف</a>
+    </div>
+    </div>
