@@ -35,7 +35,7 @@ namespace ServiceContracts.DTO
         [Required(ErrorMessage = "دسته بندی شغلی این آگهی باید مشخص باشد")]
         public Guid? JobCategoryID { get; set; }
 
-        [Required(ErrorMessage = "شرکت ثبت کننده آگهی باید مشخص باشد")]
+        //[Required(ErrorMessage = "شرکت ثبت کننده آگهی باید مشخص باشد")]
         public Guid? CompanyID { get; set; }
 
         [Required(ErrorMessage = "نوع همکاری باید مشخص باشد")]
@@ -43,24 +43,27 @@ namespace ServiceContracts.DTO
 
         [Required(ErrorMessage = "میزان حقوق باید مشخص باشد")]
         public int? SalaryAmountID { get; set; }
+        public Guid? EditionStatus { get; set; }
 
 
 
         public Advertisement ToAdvertisement()
         {
-            return new() { 
-             CityId = CityID,
-             CompanyId = CompanyID,
-             Description = Description,
-             SalaryID = SalaryAmountID,
-             JobCategoryId = JobCategoryID,
-             LeastAcademicDegree = AcademicDegree.Value.ToString(),
-             LeastYearsOfExperience = LeastYearsOfExperience,
-             MilitaryServiceStatus = MilitaryServiceStatus,
-             Title = Title,
-             TypeOfCooperation = CooperationType.Value.ToString(),
-             Gender = Gender.Value.ToString()
-            
+            return new()
+            {
+                CityId = CityID,
+                CompanyId = CompanyID,
+                Description = Description,
+                SalaryID = SalaryAmountID,
+                JobCategoryId = JobCategoryID,
+                LeastAcademicDegree = AcademicDegree.Value.ToString(),
+                LeastYearsOfExperience = LeastYearsOfExperience,
+                MilitaryServiceStatus = MilitaryServiceStatus,
+                Title = Title,
+                TypeOfCooperation = CooperationType.Value.ToString(),
+                Gender = Gender.Value.ToString(),
+                EditionStatus = EditionStatus
+
             };
         }
     }

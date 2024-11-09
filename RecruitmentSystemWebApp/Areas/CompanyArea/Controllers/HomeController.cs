@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using ServiceContracts;
 using ServiceContracts.DTO;
 
@@ -15,12 +17,14 @@ namespace RecruitmentSystemWebApp.Areas.CompanyArea.Controllers
         private readonly IJobCategoryService _jobCategoryService;
         private readonly IAdvertisementService _advertisementService;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ILocationService _locationService;
 
-        public HomeController(IJobCategoryService jobCategoryService, IAdvertisementService advertisementService, UserManager<ApplicationUser> userManager)
+        public HomeController(IJobCategoryService jobCategoryService, IAdvertisementService advertisementService, UserManager<ApplicationUser> userManager, ILocationService locationService)
         {
             _jobCategoryService = jobCategoryService;
             _advertisementService = advertisementService;
             _userManager = userManager;
+            _locationService = locationService;
         }
 
 
@@ -133,10 +137,79 @@ namespace RecruitmentSystemWebApp.Areas.CompanyArea.Controllers
         }
 
         [HttpGet]
-        public IActionResult AddAdvertisement()
+        public async Task<IActionResult> AddAdvertisement()
         {
+            List<ProvinceResponse> provinces = await _locationService.GetAllProvinces();
+            ViewBag.AllProvinces = provinces.Select(temp => new SelectListItem()
+            {
+                Text = temp.ProvinceName,
+                Value = temp.ProvinceId.ToString()
+            });
+
+            List<SalaryResponse> salaries = await _locationService.GetAllSalaryCases();
+            ViewBag.Salaries = salaries.Select(temp => new SelectListItem()
+            {
+                Text=temp.SalaryName,
+                Value = temp.SalaryId.ToString()
+            });
+
+            List<JobCategoryResponse?> jobCategories = await _jobCategoryService.GetAllJobsAsync();
+            ViewBag.JobCategories = jobCategories.Select(temp => new SelectListItem()
+            {
+                Text = temp?.CategoryName,
+                Value = temp?.CategoryId.ToString()
+            });
             return View();
         }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetCitiesByProvince(int provinceId)
+        {
+            var cities = await _locationService.GetCitiesByProvinceID(provinceId);
+            var getCities = cities.Select(c => new
+            {
+                CityID = c.CityId,
+                CityName = c.CityName
+            });
+
+            return Json(getCities);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddAdvertisement(AdvertisementAddRequest advertisementAdd)
+        {
+            Company user = (Company)await _userManager.FindByNameAsync(User.Identity.Name);
+            if (ModelState.IsValid)
+            {
+
+                if (user != null)
+                {
+                    advertisementAdd.CompanyID = user.Id;
+
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "شناسه کاربر ثبت کننده نامعتبر است");
+                    return View(advertisementAdd);
+                }
+
+                AdvertisementResponse? response = await _advertisementService.AddAdvertisement(advertisementAdd);
+                if(response == null)
+                {
+                    ModelState.AddModelError(string.Empty, "خطا در ثبت آگهی!");
+                    return View(advertisementAdd);
+                }
+                else
+                {
+                    return RedirectToAction(nameof(CompanyPanel), "Home", new {area = "CompanyArea"});
+                }
+            }
+
+            ModelState.AddModelError(string.Empty, "خطا در ثبت آگهی!");
+            return View(advertisementAdd);
+        }
+
 
 
 

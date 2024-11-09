@@ -33,6 +33,9 @@ namespace Services
             ValidationHelper.ModelValidation(adReqest);
             Advertisement? advertisement = adReqest.ToAdvertisement();
             advertisement.Id = Guid.NewGuid();
+            advertisement.IsVerified = null;
+            advertisement.EditionStatus = Guid.NewGuid();
+            advertisement.NotVerificationDescription = null;
 
             await _advertisementRepository.CreateAdvertisement(advertisement);
 
@@ -149,7 +152,7 @@ namespace Services
             advertisement.Description = companyAdUpdate.Description; advertisement.Gender = companyAdUpdate.Gender.ToString();
             advertisement.TypeOfCooperation = companyAdUpdate.CooperationType.ToString();
             advertisement.JobCategoryId = companyAdUpdate.JobCategoryID; advertisement.MilitaryServiceStatus = companyAdUpdate.MilitaryServiceStatus;
-            
+            advertisement.EditionStatus = companyAdUpdate.EditionStatus;
 
             await _advertisementRepository.UpdateAdvertisement(advertisement);
             return advertisement.ToAdvertisementResponse();

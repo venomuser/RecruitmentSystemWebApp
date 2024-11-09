@@ -19,6 +19,7 @@ builder.Services.AddControllersWithViews(options =>
 });
 
 //Services Here
+builder.Services.AddScoped<ILocationService, LocationService>();
 builder.Services.AddScoped<IJobCategoryRepository, JobCategoryRepository>();
 builder.Services.AddScoped<IAdvertisementRepository, AdvertisementRepository>();
 builder.Services.AddScoped<IJobCategoryService, JobCategoryService>();

@@ -14,12 +14,12 @@ namespace ServiceContracts.DTO
 
         public AdvertisementAdminUpdateDTO(Guid adId, long cityID, GenderOptions gender,string militaryStatus, int leastExperience,
             AcademicDegrees academicDegrees, string description, string title, Guid jobCategoryID, Guid companyID,
-            CooperationTypeOptions cooperationType, int salaryID, bool isVerified, string noVerification)
+            CooperationTypeOptions cooperationType, int salaryID, bool isVerified, string noVerification, Guid editionStatus)
         {
             AdvertisementID = adId; CityID = cityID; Gender = gender; MilitaryServiceStatus = militaryStatus;
             LeastYearsOfExperience = leastExperience; AcademicDegree = academicDegrees; Description = description; Title = title;
             JobCategoryID = jobCategoryID; CompanyID = companyID; CooperationType = cooperationType; SalaryAmountID = salaryID;
-            IsVerified = isVerified; NoVerificationDescription = noVerification;
+            IsVerified = isVerified; NoVerificationDescription = noVerification; EditionStatus = editionStatus;
 
         }
 
@@ -61,6 +61,8 @@ namespace ServiceContracts.DTO
 
         public string? NoVerificationDescription { get; set; }
 
+        public Guid? EditionStatus { get;}
+
 
         public Advertisement ToAdvertisement()
         {
@@ -79,7 +81,8 @@ namespace ServiceContracts.DTO
                 TypeOfCooperation = CooperationType.Value.ToString(),
                 Gender = Gender.Value.ToString(),
                 IsVerified = IsVerified.Value,
-                NotVerificationDescription = NoVerificationDescription
+                NotVerificationDescription = NoVerificationDescription,
+                EditionStatus = EditionStatus
             };
         }
     }

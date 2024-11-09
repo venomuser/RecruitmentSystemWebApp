@@ -51,6 +51,7 @@ namespace ServiceContracts.DTO
         public string? Salary {  get; set; }
         public string? JobCategoryName { get; set; }
         public string? CityName { get; set; }
+        public Guid? EditionStatus {  get; set; }
 
 
         public AdvertisementCompanyUpdateDTO ToCompanyUpdateDTO()
@@ -68,7 +69,8 @@ namespace ServiceContracts.DTO
                 CityID = CityID,
                 CooperationType = (CooperationTypeOptions) Enum.Parse(typeof(CooperationTypeOptions), CooperationType, true),
                 Gender = (GenderOptions) Enum.Parse(typeof(GenderOptions), Gender, true),
-                LeastYearsOfExperience = LeastYearsOfExperience
+                LeastYearsOfExperience = LeastYearsOfExperience,
+                EditionStatus = EditionStatus
             };
             
            
@@ -81,7 +83,7 @@ namespace ServiceContracts.DTO
                 (AcademicDegrees)Enum.Parse(typeof(AcademicDegrees), AcademicDegree, true), Description,
                 Title, JobCategoryID.Value, CompanyID.Value, (CooperationTypeOptions)Enum.Parse(typeof(CooperationTypeOptions),
                 CooperationType, true)
-                , SalaryAmountID.Value, IsVerified.Value, NotVerifiedDescription);
+                , SalaryAmountID.Value, IsVerified.Value, NotVerifiedDescription, EditionStatus.Value);
          
         }
     }
@@ -110,7 +112,8 @@ namespace ServiceContracts.DTO
                 AvatarAddress = advertisement.Company?.AvatarAddress,
                 Salary = advertisement.SalaryAmount?.SalaryExplanation,
                 JobCategoryName = advertisement.JobCategory?.CategoryName,
-                CityName = advertisement.City?.CityName
+                CityName = advertisement.City?.CityName,
+                EditionStatus = advertisement.EditionStatus
             };
         }   
     }

@@ -73,10 +73,11 @@ namespace Entities
                 new SqlParameter("@CompanyId",advertisement.CompanyId),
                 new SqlParameter("@NotVerificationDescription",advertisement.NotVerificationDescription),
                 new SqlParameter("@SalaryID",advertisement.SalaryID),
-                new SqlParameter("@TypeOfCooperation",advertisement.TypeOfCooperation)
+                new SqlParameter("@TypeOfCooperation",advertisement.TypeOfCooperation),
+                new SqlParameter("@EditionStatus",advertisement.EditionStatus)
             };
 
-            return await Database.ExecuteSqlRawAsync("EXECUTE [dbo].[InsertAdvertisement] @Id, @CityId, @Gender, @MilitaryServiceStatus, @LeastYearsOfExperience, @LeastAcademicDegree, @Description, @Title, @JobCategoryId, @IsVerified, @CompanyId, @NotVerificationDescription, @SalaryID, @TypeOfCooperation");
+            return await Database.ExecuteSqlRawAsync("EXECUTE [dbo].[InsertAdvertisement] @Id, @CityId, @Gender, @MilitaryServiceStatus, @LeastYearsOfExperience, @LeastAcademicDegree, @Description, @Title, @JobCategoryId, @IsVerified, @CompanyId, @NotVerificationDescription, @SalaryID, @TypeOfCooperation, @EditionStatus", sqlParameters);
         }
 
         public async Task<Advertisement> SP_GetAdvertisementById(Guid Id)

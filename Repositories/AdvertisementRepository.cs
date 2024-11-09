@@ -20,7 +20,9 @@ namespace Repositories
         }
         public async Task<Advertisement> CreateAdvertisement(Advertisement advertisement)
         {
-            await _dbContext.SP_InsertAdvertisement(advertisement);
+            //await _dbContext.SP_InsertAdvertisement(advertisement);
+            await _dbContext.Advertisements.AddAsync(advertisement);
+            await _dbContext.SaveChangesAsync();
             return advertisement;
         }
 
@@ -74,7 +76,7 @@ namespace Repositories
             advertisementUpdate.LeastYearsOfExperience = advertisement.LeastYearsOfExperience;
             advertisementUpdate.MilitaryServiceStatus = advertisement.MilitaryServiceStatus;
             advertisementUpdate.NotVerificationDescription = advertisement.NotVerificationDescription;
-            advertisementUpdate.TypeOfCooperation = advertisement.TypeOfCooperation;
+            advertisementUpdate.TypeOfCooperation = advertisement.TypeOfCooperation; advertisementUpdate.EditionStatus = advertisement.EditionStatus;
 
             int count = await _dbContext.SaveChangesAsync();
             return advertisementUpdate;

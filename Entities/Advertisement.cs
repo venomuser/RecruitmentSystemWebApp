@@ -49,5 +49,7 @@ namespace Entities
 
         [ForeignKey(nameof(SalaryID))]
         public virtual SalaryAmount? SalaryAmount { get; set; }
+
+        public Guid? EditionStatus { get; set; }
     }
 }

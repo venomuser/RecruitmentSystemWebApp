@@ -8,3 +8,211 @@
         <li><a asp-action="AllAdvertisements" asp-controller="Home">مشاهده آگهی های ایجاد شده</a></li>
     </ul>
 </div>
+
+<h1 class="title is-4">ایجاد آگهی</h1>
+<form class="box" asp-controller="Home" asp-action="AddAdvertisement" method="post">
+
+
+
+
+    @*Title*@
+    <div class="field">
+        <label class="label" asp-for="Title"> عنوان آگهی </label>
+        <div class="control">
+            <input class="input" asp-for="Title" />
+            <span asp-validation-for="Title" class="is-danger" style="color: red"></span>
+        </div>
+    </div>
+
+
+    @*Job Category*@
+    <div class="field">
+        <label class="label" asp-for="JobCategoryID"> دسته بندی شغلی</label>
+        <div class="control">
+            <select class="form-input" asp-for="JobCategoryID" asp-items="@ViewBag.JobCategories">
+                <option value="">دسته بندی شغلی مربوطه را انتخاب کنید</option>
+
+            </select>
+            <span asp-validation-for="JobCategoryID" class="is-danger" style="color: red"></span>
+        </div>
+    </div>
+
+
+    @{
+        var cooperationTypes = Enum.GetValues(typeof(CooperationTypeOptions)).Cast<CooperationTypeOptions>();
+    }
+
+    <div class="field">
+        <div class="control">
+            @foreach (var cooperation in cooperationTypes)
+            {
+                // Get the Display Name using the AttributeHelper method
+                var displayNameCoop = cooperation.GetDisplayName();
+
+                <label class="radio">
+                    <input type="radio" asp-for="CooperationType" value="@cooperation" id="@cooperation" />
+                    @displayNameCoop
+                </label>
+            }
+
+            <span asp-validation-for="CooperationType" class="is-danger" style="color: red"></span>
+        </div>
+    </div>
+
+
+    @*Province*@
+    <div class="field">
+        <label class="label" for="ProvinceID"> استان </label>
+        <div class="control">
+            <select class="form-input" for="ProvinceID" id="ProvinceID" name="ProvinceID" asp-items="@ViewBag.AllProvinces">
+                <option value="">استان مربوطه را انتخاب کنید</option>
+
+            </select>
+            
+        </div>
+    </div>
+    @*City*@
+    <div class="field">
+        <label class="label" asp-for="CityID"> شهر</label>
+        <div class="control">
+            <select class="form-input" asp-for="CityID" asp-items="@ViewBag.Cities">
+                <option value="">شهر مربوطه را انتخاب کنید</option>
+
+            </select>
+            <span asp-validation-for="CityID" class="is-danger" style="color: red"></span>
+        </div>
+    </div>
+
+    @*Salary Types*@
+    <div class="field">
+        <label class="label" asp-for="SalaryAmountID">میزان حقوق</label>
+        <div class="control">
+            <select class="form-input" asp-for="SalaryAmountID" asp-items="@ViewBag.Salaries">
+                <option value="">میزان حقوق را انتخاب کنید</option>
+
+            </select>
+            <span asp-validation-for="SalaryAmountID" class="is-danger" style="color: red"></span>
+        </div>
+    </div>
+    
+
+    @{
+        var genderOptions = Enum.GetValues(typeof(GenderOptions)).Cast<GenderOptions>();
+    }
+
+    <div class="field">
+        <div class="control">
+            @foreach (var gender in genderOptions)
+            {
+                // Get the Display Name using the AttributeHelper method
+                var displayName = gender.GetDisplayName();
+
+                <label class="radio">
+                    <input type="radio" asp-for="Gender" value="@gender" id="@gender" />
+                    @displayName
+                </label>
+            }
+
+            <span asp-validation-for="Gender" class="is-danger" style="color: red"></span>
+        </div>
+    </div>
+
+    @*Military Service*@
+    <div class="field">
+        <label class="label" asp-for="MilitaryServiceStatus"> وضعیت سربازی </label>
+        <div class="control">
+            <input class="input" asp-for="MilitaryServiceStatus" />
+            <span asp-validation-for="MilitaryServiceStatus" class="is-danger" style="color: red"></span>
+        </div>
+    </div>
+
+    @*LeastExperience*@
+    <div class="field">
+        <label class="label" asp-for="LeastYearsOfExperience"> حداقل سابقه</label>
+        <div class="control">
+            <input class="input" asp-for="LeastYearsOfExperience" />
+            <span asp-validation-for="LeastYearsOfExperience" class="is-danger" style="color: red"></span>
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    @{
+        var academicDegrees = Enum.GetValues(typeof(AcademicDegrees)).Cast<AcademicDegrees>();
+    }
+
+    <div class="field">
+        <div class="control">
+            @foreach (var degree in academicDegrees)
+            {
+                // Get the Display Name using the AttributeHelper method
+                var displayNameDegree = degree.GetDisplayName();
+
+                <label class="radio">
+                    <input type="radio" asp-for="AcademicDegree" value="@degree" id="@degree" />
+                    @displayNameDegree
+                </label>
+            }
+
+            <span asp-validation-for="AcademicDegree" class="is-danger" style="color: red"></span>
+        </div>
+    </div>
+
+    @*Description*@
+    <div class="field">
+        <label class="label" asp-for="Description">شرح موقعیت شغلی</label>
+        <div class="control">
+            <textarea class="textarea" placeholder="شرح موقعیت شغلی را در اینجا بنویسید" asp-for="Description"></textarea>
+            <span asp-validation-for="Description" class="is-danger" style="color: red"></span>
+        </div>
+    </div>
+
+
+
+    @*Submit Button*@
+    <div class="field">
+        <div class="control">
+            <button class="button is-primary" type="submit">ثبت آگهی</button>
+
+            <div asp-validation-summary="All" style="color: red" class="is-danger"></div>
+
+
+        </div>
+    </div>
+</form>
+
+@section fetchJS{
+    <script>
+        document.getElementById("ProvinceID").addEventListener("change", function () {
+            var provinceId = this.value;
+            var citySelect = document.getElementById("CityID");
+
+            // Clear current city options
+            citySelect.innerHTML = '<option value="">شهر مربوطه را انتخاب کنید</option>';
+
+            if (provinceId) {
+                fetch(`/CompanyArea/Home/GetCitiesByProvince?provinceId=${provinceId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        // Populate city dropdown with new options
+                        data.forEach(city => {
+                            var option = document.createElement("option");
+                            option.value = city.cityID;
+                            option.textContent = city.cityName;
+                            citySelect.appendChild(option);
+                        });
+                    })
+                    .catch(error => console.error('Error fetching cities:', error));
+            }
+        });
+    </script>
+}
+@section scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer" asp-fallback-test="window.jQuery" asp-fallback-src="~/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.21.0/jquery.validate.min.js" integrity="sha512-KFHXdr2oObHKI9w4Hv1XPKc898mE4kgYx58oqsc/JqqdLMDI4YjOLzom+EMlW8HFUd0QfjfAvxSL6sEq/a42fQ==" crossorigin="anonymous" referrerpolicy="no-referrer" asp-fallback-test="window.jQuery.validator" asp-fallback-src="~/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/4.0.0/jquery.validate.unobtrusive.min.js" integrity="sha512-xq+Vm8jC94ynOikewaQXMEkJIOBp7iArs3IhFWSWdRT3Pq8wFz46p+ZDFAR7kHnSFf+zUv52B3prRYnbDRdgog==" crossorigin="anonymous" referrerpolicy="no-referrer" asp-fallback-test="window.jQuery.validator.unobtrusive" asp-fallback-src="~/jquery.validate.unobtrusive.min.js"></script>
+}

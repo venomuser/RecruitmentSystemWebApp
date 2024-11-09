@@ -44,6 +44,7 @@ namespace ServiceContracts.DTO
 
         [Required(ErrorMessage = "میزان حقوق باید مشخص باشد")]
         public int? SalaryAmountID { get; set; }
+        public Guid? EditionStatus {  get; set; }
 
 
         public Advertisement ToAdvertisement()
