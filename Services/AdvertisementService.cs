@@ -127,7 +127,7 @@ namespace Services
 
             ValidationHelper.ModelValidation(adminAdUpdate);
 
-          Advertisement? advertisement = await _advertisementRepository.GetAdvertisementByID(adminAdUpdate.AdvertisementID);
+          Advertisement? advertisement = await _advertisementRepository.GetAdvertisementByID(adminAdUpdate.AdvertisementID.Value);
             if(advertisement == null) return null;
             advertisement.IsVerified = adminAdUpdate.IsVerified;
             advertisement.NotVerificationDescription = adminAdUpdate.NoVerificationDescription;

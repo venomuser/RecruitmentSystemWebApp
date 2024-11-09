@@ -1,0 +1,107 @@
+﻿@model AdvertisementAdminUpdateDTO
+@{
+    ViewBag.Title = "بررسی آگهی ثبت شده";
+
+    GenderOptions gender = (GenderOptions)Enum.Parse(typeof(GenderOptions), ViewBag.Response.Gender);
+    string g = gender.GetDisplayName();
+
+    CooperationTypeOptions cooperation = (CooperationTypeOptions)Enum.Parse(typeof(CooperationTypeOptions), ViewBag.Response.CooperationType);
+    string co = cooperation.GetDisplayName();
+
+    AcademicDegrees degrees = (AcademicDegrees)Enum.Parse(typeof(AcademicDegrees), ViewBag.Response.AcademicDegree);
+    string aca = degrees.GetDisplayName();
+
+    
+}
+
+<h2 class="title is-2">بررسی آگهی ثبت شده</h2>
+
+<div class="content is-normal">
+    <img src="@ViewBag.Response.AvatarAddress" width="150px" height="150px" />
+    <h3>@ViewBag.Response.CompanyName</h3>
+    <h2>@ViewBag.Response.Title</h2>
+    <h4>حقوق: @ViewBag.Response.Salary</h4>
+    <h4>دسته بندی شغلی: @ViewBag.Response.JobCategoryName</h4>
+    <h4>جنسیت: @g</h4>
+    <h4>نوع همکاری: @co</h4>
+    <h4>شهر محل استخدام: @ViewBag.Response.CityName</h4>
+    @if (string.IsNullOrEmpty(ViewBag.Response.MilitaryServiceStatus))
+    {
+        <h4>وضعیت سربازی: مهم نیست</h4>
+    }
+    else
+    {
+        <h4>وضعیت سربازی: @ViewBag.Response.MilitaryServiceStatus</h4>
+    }
+
+    @if (ViewBag.Response.LeastYearsOfExperience == 0 || ViewBag.Response.LeastYearsOfExperience == null)
+    {
+        <h4>حداقل سابقه: مهم نیست</h4>
+    }
+    else
+    {
+        <h4>حداقل سابقه: @ViewBag.Response.LeastYearsOfExperience سال</h4>
+    }
+
+    <h4>حداقل مدرک تحصیلی: @aca</h4>
+    <h4>شرح موقعیت شغلی:</h4>
+    <p>@ViewBag.Response.Description</p>
+</div>
+<form asp-controller="Admin" asp-action="EditAdvertisement" method="post">
+    <input type="hidden" asp-for="AdvertisementID" />
+    <input type="hidden" asp-for="EditionStatus" />
+
+    @*Approve or Reject*@
+    <h3 class="title is-3">تأیید یا رد آگهی</h3>
+    <div class="field">
+        <div class="control">
+            <label class="radio">
+                <input type="radio" asp-for="IsVerified" value="true" id="approveRadio">
+                انتشار آگهی
+            </label>
+            <label class="radio">
+                <input type="radio" asp-for="IsVerified" value="false" id="rejectRadio">
+                رد آگهی
+            </label>
+        </div>
+    </div>
+
+    @*Reason of rejection*@
+    <div class="field">
+        <label class="label">پیام علت رد آگهی</label>
+        <div class="control">
+            <textarea class="textarea" asp-for="NoVerificationDescription" placeholder="علت رد آگهی را در اینجا بنویسید ..." id="rejectionReason"></textarea>
+            <div asp-validation-summary="All" style="color: red" class="is-danger"></div>
+        </div>
+    </div>
+
+    <button class="button is-primary" type="submit">ثبت وضعیت</button>
+
+</form>
+
+@section LiveJS {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const approveRadio = document.getElementById("approveRadio");
+            const rejectRadio = document.getElementById("rejectRadio");
+            const rejectionReason = document.getElementById("rejectionReason");
+
+            // Function to enable/disable the textarea based on selected radio
+            function toggleTextarea() {
+                if (approveRadio.checked) {
+                    rejectionReason.disabled = true;
+                } else if (rejectRadio.checked) {
+                    rejectionReason.disabled = false;
+                }
+            }
+
+            // Set initial state on page load
+            toggleTextarea();
+
+            // Attach event listeners to radio buttons
+            approveRadio.addEventListener("change", toggleTextarea);
+            rejectRadio.addEventListener("change", toggleTextarea);
+        });
+    </script>
+}
+

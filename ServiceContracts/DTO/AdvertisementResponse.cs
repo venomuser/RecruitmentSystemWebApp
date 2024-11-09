@@ -78,12 +78,13 @@ namespace ServiceContracts.DTO
 
         public AdvertisementAdminUpdateDTO ToAdminUpdateDTO()
         {
-            return new AdvertisementAdminUpdateDTO(AdvertisementID, CityID.Value, (GenderOptions)Enum.Parse(typeof(GenderOptions), Gender, true)
-                , MilitaryServiceStatus, LeastYearsOfExperience.Value,
-                (AcademicDegrees)Enum.Parse(typeof(AcademicDegrees), AcademicDegree, true), Description,
-                Title, JobCategoryID.Value, CompanyID.Value, (CooperationTypeOptions)Enum.Parse(typeof(CooperationTypeOptions),
-                CooperationType, true)
-                , SalaryAmountID.Value, IsVerified.Value, NotVerifiedDescription, EditionStatus.Value);
+            return new AdvertisementAdminUpdateDTO()
+            {
+                AdvertisementID = AdvertisementID,
+                IsVerified = IsVerified,
+                NoVerificationDescription = NotVerifiedDescription,
+                EditionStatus = EditionStatus
+            };
          
         }
     }

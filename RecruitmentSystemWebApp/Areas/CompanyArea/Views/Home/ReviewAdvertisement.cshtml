@@ -45,8 +45,8 @@
 
     @if(Model.IsVerified == false)
     {
-        <h2>علت رد شدن آگهی شما به شرح زیر می باشد:</h2>
-        <p class="is-danger">@Model.NotVerifiedDescription</p>
+        <h2 style="color: red">علت رد شدن آگهی شما به شرح زیر می باشد:</h2>
+        <p class="is-danger" style="color: red">@Model.NotVerifiedDescription</p>
     }
 </div>
 <div class="field is-grouped">

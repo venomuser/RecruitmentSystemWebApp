@@ -1,0 +1,56 @@
+﻿@model IEnumerable<AdvertisementResponse>
+@{
+    ViewBag.Title = "آگهی های در صف بررسی";
+}
+
+<h2 class="title is-2">آگهی های در صف بررسی</h2>
+
+
+@foreach (var item in Model)
+{
+
+    <div class="card">
+
+        <div class="card-content">
+            <div class="media">
+                <a asp-action="EditAdvertisement" asp-controller="Admin" asp-route-Ad="@item.AdvertisementID">
+                    <div class="media-left">
+                        <figure class="image is-48x48">
+                            @if (item.AvatarAddress != null)
+                            {
+                                <img src="@item.AvatarAddress"
+                                     alt="لوگوی شرکت" />
+                            }
+                            else
+                            {
+                                <img src="https://bulma.io/assets/images/placeholders/96x96.png"
+                                     alt="Placeholder image" />
+                            }
+                        </figure>
+                    </div>
+                    <div class="media-content">
+                        <p class="title is-4">@item.Title</p>
+                        <p class="subtitle is-6">@item.CompanyName</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="content">
+                @if (item.Description.Count() > 100)
+                {
+
+                    string a = "";
+                    a = item.Description.Substring(0, 50) + "...";
+
+                    @a
+                }
+                else
+                {
+                    @item.Description
+                }
+
+            </div>
+        </div>
+    </div>
+
+}
