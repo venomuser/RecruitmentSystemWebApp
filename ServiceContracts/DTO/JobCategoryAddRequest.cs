@@ -14,7 +14,7 @@ namespace ServiceContracts.DTO
         //[Remote(????)]
         public string? CategoryName { get; set; }
 
-        [Required(ErrorMessage ="کاربر ایجاد کننده باید مشخص باشد.")]
+        //[Required(ErrorMessage ="کاربر ایجاد کننده باید مشخص باشد.")]
         public Guid? UserID { get; set; }
 
         public JobCategory ToJobCategory()

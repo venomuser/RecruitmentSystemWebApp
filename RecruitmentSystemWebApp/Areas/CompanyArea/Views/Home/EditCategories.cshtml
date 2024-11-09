@@ -1,0 +1,71 @@
+﻿@model JobCategoryUpdateRequest
+
+
+<div class="tabs is-centered">
+    <ul>
+        <li><a asp-action="AddCategories" asp-controller="Home">ایجاد دسته بندی شغلی</a></li>
+        <li class="is-active"><a asp-action="EditCategories" asp-controller="Home">ویرایش دسته بندی شغلی</a></li>
+        <li><a asp-action="AddAdvertisement" asp-controller="Home">ایجاد آگهی استخدام</a></li>
+        <li><a asp-action="AllAdvertisements" asp-controller="Home">مشاهده آگهی های ایجاد شده</a></li>
+    </ul>
+</div>
+
+<h2 class="title is-2">ویرایش دسته بندی های شغلی</h2>
+
+
+
+        <select id="jobCategorySelect" onselect="GettingValue">
+            <option selected>انتخاب دسته بندی شغلی</option>
+            @foreach (JobCategoryResponse item in ViewBag.Categories)
+            {
+        <option value="@item.CategoryId" data-name="@item.CategoryName" class="dropdown-item">@item.CategoryName</option>
+            }
+
+
+        </select>
+    
+
+
+<form class="box" asp-action="EditCategories" asp-controller="Home" method="post">
+   
+
+    @*Category Name*@
+    <div class="field">
+        <label class="label" asp-for="JobCategoryName">نام دسته بندی شغلی </label>
+        <div class="control">
+            <input class="input" asp-for="JobCategoryName" />
+            <span asp-validation-for="JobCategoryName" class="is-danger" style="color: red"></span>
+        </div>
+    </div>
+    <input type="hidden" asp-for="JobCategoryId" />
+    @*Submit Button*@
+    <div class="field">
+        <div class="control">
+            <button class="button is-primary" type="submit">ویرایش دسته بندی شغلی</button>
+
+            <div asp-validation-summary="All" style="color: red" class="is-danger"></div>
+
+            <div class="is-success" style="color: green">@ViewBag.SuccessMessage</div>
+        </div>
+    </div>
+</form>
+
+@section LiveScript{
+    <script>
+        // JavaScript to handle select option changes
+       
+        document.getElementById("jobCategorySelect").addEventListener("change", function () {
+            var selectedOption = this.options[this.selectedIndex];
+
+            // Get the CategoryName from the data attribute and set it in the text box
+            var categoryName = selectedOption.getAttribute("data-name");
+            document.getElementById("JobCategoryName").value = categoryName;
+
+            // Set the hidden JobCategoryId field
+            document.getElementById("JobCategoryId").value = this.value;
+        });
+
+        
+    </script>
+
+}

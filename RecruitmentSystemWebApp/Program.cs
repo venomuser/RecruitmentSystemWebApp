@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using RecruitmentSystemWebApp.Filters;
 using Repositories;
 using RepositoryContracts;
 using ServiceContracts;
@@ -35,6 +36,8 @@ builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
 .AddDefaultTokenProviders()
 .AddUserStore<UserStore<ApplicationUser, ApplicationRole, ApplicationDbContext, Guid>>()
 .AddRoleStore<RoleStore<ApplicationRole, ApplicationDbContext, Guid>>();
+builder.Services.AddScoped<EmailMatchAuthorizationFilter>();
+
 
 builder.Services.AddAuthorization(options =>
 {

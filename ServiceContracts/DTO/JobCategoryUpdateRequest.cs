@@ -16,7 +16,7 @@ namespace ServiceContracts.DTO
         [Required(ErrorMessage = "نام دسته شغلی نمی تواند خالی باشد.")]
         public string? JobCategoryName { get; set; }
 
-        [Required(ErrorMessage = "کاربر ویرایش کننده باید مشخص باشد.")]
+        //[Required(ErrorMessage = "کاربر ویرایش کننده باید مشخص باشد.")]
         public Guid? UserID { get; set; }
 
 

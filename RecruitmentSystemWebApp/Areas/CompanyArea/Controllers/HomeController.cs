@@ -9,7 +9,7 @@ namespace RecruitmentSystemWebApp.Areas.CompanyArea.Controllers
 {
 
     [Area("CompanyArea")]
-    [Authorize(Roles ="CompanyUser")]
+    [Authorize(Roles = "CompanyUser")]
     public class HomeController : Controller
     {
         private readonly IJobCategoryService _jobCategoryService;
@@ -24,7 +24,7 @@ namespace RecruitmentSystemWebApp.Areas.CompanyArea.Controllers
         }
 
 
-       public IActionResult CompanyPanel()
+        public IActionResult CompanyPanel()
         {
             return View();
         }
@@ -36,6 +36,110 @@ namespace RecruitmentSystemWebApp.Areas.CompanyArea.Controllers
             return View(ads);
         }
 
-        
+        [HttpGet]
+        public IActionResult AddCategories()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddCategories(JobCategoryAddRequest request)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByEmailAsync(User.Identity?.Name);
+                if(user != null)
+                {
+                    request.UserID = user.Id;
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "شناسه کاربر ثبت کننده نامعتبر است");
+                    return View(request);
+                }
+
+                Message message = await _jobCategoryService.JobAddAsync(request);
+                if (!message.Success.Value)
+                {
+                    ModelState.AddModelError(string.Empty, message.OperationMessage);
+                    return View(request);
+                }
+                else
+                {
+                    ViewBag.SuccessMessage = message.OperationMessage;
+                    return View();
+                }
+            }
+            return View(request);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditCategories()
+        {
+            var user = await _userManager.FindByEmailAsync(User.Identity?.Name);
+            if (user == null)
+            {
+                ModelState.AddModelError(string.Empty, "شناسه کاربر ثبت کننده نامعتبر است");
+                return View();
+            }
+            else
+            {
+                ViewBag.Categories = await _jobCategoryService.GetJobCategoryByCompanyId(user.Id);
+                return View();
+            }
+            
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditCategories(JobCategoryUpdateRequest request)
+        {
+            var user = await _userManager.FindByEmailAsync(User.Identity?.Name);
+            if (ModelState.IsValid)
+            {
+                
+                if (user != null)
+                {
+                    request.UserID = user.Id;
+                    
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "شناسه کاربر ثبت کننده نامعتبر است");
+                    return View(request);
+                }
+
+                Message message = await _jobCategoryService.JobUpdateAsync(request);
+                if (!message.Success.Value)
+                {
+                    ModelState.AddModelError(string.Empty, message.OperationMessage);
+                    return View(request);
+                }
+                else
+                {
+                    ViewBag.SuccessMessage = message.OperationMessage;
+                    ViewBag.Categories = await _jobCategoryService.GetJobCategoryByCompanyId(user.Id);
+
+                    return View();
+                }
+            }
+            if (user == null)
+            {
+                ModelState.AddModelError(string.Empty, "شناسه کاربر ثبت کننده نامعتبر است");
+                return View(request);
+            }
+
+            ViewBag.Categories = await _jobCategoryService.GetJobCategoryByCompanyId(user.Id);
+            return View(request);
+        }
+
+        [HttpGet]
+        public IActionResult AddAdvertisement()
+        {
+            return View();
+        }
+
+
+
+
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using RecruitmentSystemWebApp.Filters;
 using ServiceContracts;
 using ServiceContracts.DTO;
 using Services;
@@ -195,6 +196,7 @@ namespace RecruitmentSystemWebApp.Controllers
 
         [HttpGet]
         [Authorize(Roles = "CompanyUser")]
+        [ServiceFilter(typeof(EmailMatchAuthorizationFilter))]
         public async Task<IActionResult> CompanyEdit(string? UserEmail)
         {
             if (UserEmail == null)
@@ -223,6 +225,7 @@ namespace RecruitmentSystemWebApp.Controllers
 
         [HttpPost]
         [Authorize(Roles = "CompanyUser")]
+        [ServiceFilter(typeof(EmailMatchAuthorizationFilter))]
         public async Task<IActionResult> CompanyEdit(CompanyEditDTO companyEditDTO, IFormFile? avatar)
         {
             if (companyEditDTO == null)
