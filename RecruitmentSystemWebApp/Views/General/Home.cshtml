@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "سیستم آگهی استخدام";
 }
-<h1 class="title is-3">سیستم ثبت آگهی استخدام</h1>
+<h1 class="title is-3">سامانه ثبت آگهی استخدام</h1>
 
 <form class="box"asp-action="Searching" asp-controller="General" method="post">
     <h3 class="title is-4">جستجو و فیلتر کردن آگهی ها</h3>
@@ -67,7 +67,7 @@
     <!-- Apply Filters and Clear Filters Buttons -->
     <div class="field is-grouped">
         <div class="control">
-            <button class="button is-link is-outlined" id="applyFiltersButton">اعمال فیلتر فیلتر ها و جستجو</button>
+            <button class="button is-link is-outlined" id="applyFiltersButton">اعمال فیلتر ها و جستجو</button>
         </div>
         <div class="control">
             <a class="button is-danger is-outlined" asp-action="Home" asp-controller="General"  id="clearFiltersButton" type="reset">پاک کردن فیلتر ها و جستجو</a>
