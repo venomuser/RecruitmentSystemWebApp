@@ -80,7 +80,7 @@ namespace ServiceContracts
         /// <param name="cities">cities filter on ads list</param>
         /// <param name="cooperations">Kind of cooperations that the ads list may has</param>
         /// <returns></returns>
-        Task<List<AdvertisementResponse>> GetFilteredAdvertisements(List<AdvertisementResponse> adList, List<int?> salaries,
-            List<long?> cities, List<CooperationTypeOptions?> cooperations);
+        Task<List<AdvertisementResponse>> GetFilteredAdvertisements(List<AdvertisementResponse> adList, List<int> salaries,
+            List<long> cities, List<CooperationTypeOptions> cooperations);
     }
 }

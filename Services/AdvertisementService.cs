@@ -65,19 +65,19 @@ namespace Services
 
         }
 
-        public async Task<List<AdvertisementResponse>> GetFilteredAdvertisements(List<AdvertisementResponse> adList, List<int?> salaries, List<long?> cities, List<CooperationTypeOptions?> cooperations)
+        public async Task<List<AdvertisementResponse>> GetFilteredAdvertisements(List<AdvertisementResponse> adList, List<int> salaries, List<long> cities, List<CooperationTypeOptions> cooperations)
         {
             if (adList.Count < 1)
                 return adList;
 
             if(salaries != null && salaries.Any())
             {
-                adList = adList.Where(ad=> salaries.Contains(ad.SalaryAmountID)).ToList();
+                adList = adList.Where(ad=> salaries.Contains(ad.SalaryAmountID.Value)).ToList();
             }
 
             if(cities != null && cities.Any())
             {
-                adList = adList.Where(ad => cities.Contains(ad.CityID)).ToList();
+                adList = adList.Where(ad => cities.Contains(ad.CityID.Value)).ToList();
             }
 
             if(cooperations != null && cooperations.Any())

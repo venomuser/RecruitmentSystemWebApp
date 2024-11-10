@@ -1,4 +1,148 @@
-﻿@{
+﻿@model AdvertisementFiltersDTO
+@{
     ViewBag.Title = "سیستم آگهی استخدام";
 }
 <h1 class="title is-3">سیستم ثبت آگهی استخدام</h1>
+
+<form class="box"asp-action="Searching" asp-controller="General" method="post">
+    <h3 class="title is-4">جستجو و فیلتر کردن آگهی ها</h3>
+
+    
+    <!-- Search Box -->
+    <div class="field">
+        <label class="label">جستجوی متن</label>
+        <div class="control">
+            <input class="input" placeholder="جستجوی چیزی در عناوین و توضیحات آگهی ها..." asp-for="SearchString">
+        </div>
+    </div>
+
+    <!-- City Filter -->
+    <div class="field">
+        <label class="label">شهر ها</label>
+        <div class="control">
+            @for(int i=0; i<Model.Cities.Count; i++)
+            {
+                <label class="checkbox">
+                    <input type="checkbox" name="Cities" value="@Model.Cities[i]"> @Model.CityNames[i]
+                </label>
+            }
+            
+           
+            <!-- Add more checkboxes for cities as needed -->
+        </div>
+    </div>
+
+    <!-- Cooperation Type Filter -->
+    <div class="field">
+        <label class="label">نوع همکاری</label>
+        <div class="control">
+            <label class="checkbox">
+                <input type="checkbox" name="CooperationTypes" value="FullTime"> تمام وقت
+            </label>
+            <label class="checkbox">
+                <input type="checkbox" name="CooperationTypes" value="PartTime"> پاره وقت
+            </label>
+            <label class="checkbox">
+                <input type="checkbox" name="CooperationTypes" value="Remote"> دورکاری
+            </label>
+        </div>
+    </div>
+
+    <!-- Salary Filter -->
+    <div class="field">
+        <label class="label">میزان حقوق</label>
+        <div class="control">
+            @for(int i=0; i<Model.Salaries.Count; i++)
+            {
+                <label class="checkbox">
+                    <input type="checkbox" name="Salaries" value="@Model.Salaries[i]"> @Model.SalaryNames[i]
+                </label>
+            }
+            
+           
+            <!-- Add more salary ranges as needed -->
+        </div>
+    </div>
+
+    <!-- Apply Filters and Clear Filters Buttons -->
+    <div class="field is-grouped">
+        <div class="control">
+            <button class="button is-link is-outlined" id="applyFiltersButton">اعمال فیلتر فیلتر ها و جستجو</button>
+        </div>
+        <div class="control">
+            <a class="button is-danger is-outlined" asp-action="Home" asp-controller="General"  id="clearFiltersButton" type="reset">پاک کردن فیلتر ها و جستجو</a>
+        </div>
+    </div>
+</form>
+
+@foreach (AdvertisementResponse item in ViewBag.Result)
+{
+
+    <div class="card">
+
+        <div class="card-content">
+            <div class="media">
+                <a asp-action="ReviewAdvertisement" asp-controller="Home" asp-route-Ad="@item.AdvertisementID">
+                    <div class="media-left">
+                        <figure class="image is-48x48">
+                            @if (item.AvatarAddress != null)
+                            {
+                                <img src="@item.AvatarAddress"
+                                     alt="لوگوی شرکت" />
+                            }
+                            else
+                            {
+                                <img src="https://bulma.io/assets/images/placeholders/96x96.png"
+                                     alt="Placeholder image" />
+                            }
+                        </figure>
+                    </div>
+                    <div class="media-content">
+                        <p class="title is-4">@item.Title</p>
+                        <p class="subtitle is-6">@item.CompanyName</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="content">
+                @if (item.Description.Count() > 100)
+                {
+
+                    string a = "";
+                    a = item.Description.Substring(0, 50) + "...";
+
+                    @a
+                }
+                else
+                {
+                    @item.Description
+                }
+            </div>
+        </div>
+    </div>
+
+}
+
+<script>
+    // JavaScript to handle Apply and Clear filters
+    document.getElementById("applyFiltersButton").addEventListener("click", () => {
+        // Gather selected filter options
+        const searchTerm = document.getElementById("searchInput").value;
+        const cities = Array.from(document.querySelectorAll("input[name='cities']:checked")).map(cb => cb.value);
+        const cooperationTypes = Array.from(document.querySelectorAll("input[name='cooperationTypes']:checked")).map(cb => cb.value);
+        const salaryRanges = Array.from(document.querySelectorAll("input[name='salaryRanges']:checked")).map(cb => cb.value);
+
+        // Here, you can send the filters to the server or apply the filters to display results dynamically
+        console.log({ searchTerm, cities, cooperationTypes, salaryRanges });
+
+        // Example: submit to server (replace this URL with your endpoint)
+        // window.location.href = `/search?searchTerm=${searchTerm}&cities=${cities.join(',')}&cooperationTypes=${cooperationTypes.join(',')}&salaryRanges=${salaryRanges.join(',')}`;
+    });
+
+    document.getElementById("clearFiltersButton").addEventListener("click", () => {
+        // Reset all input fields
+        document.getElementById("searchInput").value = "";
+        document.querySelectorAll("input[type='checkbox']").forEach(cb => cb.checked = false);
+    });
+</script>
+
