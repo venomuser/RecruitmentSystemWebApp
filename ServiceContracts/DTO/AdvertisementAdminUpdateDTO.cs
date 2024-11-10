@@ -17,7 +17,7 @@ namespace ServiceContracts.DTO
         public Guid? AdvertisementID { get; set; }
 
 
-        [Required(ErrorMessage = "وضعیت انتشار آگهی باید مشخص شود")]
+        //[Required(ErrorMessage = "وضعیت انتشار آگهی باید مشخص شود")]
         public bool? IsVerified { get; set; }
 
         public string? NoVerificationDescription { get; set; }

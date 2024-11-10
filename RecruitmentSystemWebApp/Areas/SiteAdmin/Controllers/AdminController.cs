@@ -37,7 +37,7 @@ namespace RecruitmentSystemWebApp.Areas.SiteAdmin.Controllers
             }
 
             ViewBag.Response = response;
-            
+
 
             AdvertisementAdminUpdateDTO updateDTO = response.ToAdminUpdateDTO();
             return View(updateDTO);
@@ -84,6 +84,26 @@ namespace RecruitmentSystemWebApp.Areas.SiteAdmin.Controllers
             }
 
 
+        }
+
+        public async Task<IActionResult> SuspendAdvertisement(Guid? SuspendAd)
+        {
+            AdvertisementResponse? response = await _advertisementService.GetAdvertisementByID(SuspendAd);
+            if (response == null)
+            {
+                return NotFound();
+            }
+            AdvertisementAdminUpdateDTO? updateDTO = response.ToAdminUpdateDTO();
+            updateDTO.IsVerified = null;
+            AdvertisementResponse? resultUpdate = await _advertisementService.UpdateAdvertisementByAdmin(updateDTO);
+            if (resultUpdate == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                return RedirectToAction(nameof(ControlAds), "Admin");
+            }
         }
     }
 }

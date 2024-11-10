@@ -1,0 +1,54 @@
+﻿@model AdvertisementResponse
+@{
+    ViewBag.Title = "آگهی استخدام";
+
+
+    GenderOptions gender = (GenderOptions)Enum.Parse(typeof(GenderOptions), Model.Gender);
+    string g = gender.GetDisplayName();
+
+    CooperationTypeOptions cooperation = (CooperationTypeOptions)Enum.Parse(typeof(CooperationTypeOptions), Model.CooperationType);
+    string co = cooperation.GetDisplayName();
+
+    AcademicDegrees degrees = (AcademicDegrees)Enum.Parse(typeof(AcademicDegrees), Model.AcademicDegree);
+    string aca = degrees.GetDisplayName();
+}
+<div class="content is-normal">
+    <img src="@Model.AvatarAddress" width="150px" height="150px" />
+    <h3>@Model.CompanyName</h3>
+    <h2>@Model.Title</h2>
+    <h4>حقوق: @Model.Salary</h4>
+    <h4>دسته بندی شغلی: @Model.JobCategoryName</h4>
+    <h4>جنسیت: @g</h4>
+    <h4>نوع همکاری: @co</h4>
+    <h4>شهر محل استخدام: @Model.CityName</h4>
+    @if (string.IsNullOrEmpty(Model.MilitaryServiceStatus))
+    {
+        <h4>وضعیت سربازی: مهم نیست</h4>
+    }
+    else
+    {
+        <h4>وضعیت سربازی: @Model.MilitaryServiceStatus</h4>
+    }
+
+    @if (Model.LeastYearsOfExperience == 0 || Model.LeastYearsOfExperience == null)
+    {
+        <h4>حداقل سابقه: مهم نیست</h4>
+    }
+    else
+    {
+        <h4>حداقل سابقه: @Model.LeastYearsOfExperience سال</h4>
+    }
+
+    <h4>حداقل مدرک تحصیلی: @aca</h4>
+    <h4>شرح موقعیت شغلی:</h4>
+    <p>@Model.Description</p>
+
+   
+</div>
+
+@if(User.Identity.IsAuthenticated && User.IsInRole("SiteAdmin"))
+{
+    <a asp-action="SuspendAdvertisement" asp-controller="Admin" asp-area="SiteAdmin" asp-route-SuspendAd="@Model.AdvertisementID" class="button is-danger">تعلیق</a>
+}
+
+   

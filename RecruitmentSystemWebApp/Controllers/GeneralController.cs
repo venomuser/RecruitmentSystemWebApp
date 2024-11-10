@@ -76,6 +76,21 @@ namespace RecruitmentSystemWebApp.Controllers
             return View("Home",filterDTO);
         }
 
+        public async Task<IActionResult> ViewAdvertisement(Guid? Ad)
+        {
+            AdvertisementResponse? response = await _advertisementService.GetAdvertisementByID(Ad);
+            if (response == null)
+            {
+                return NotFound();
+            }
+            if(response.IsVerified != true)
+            {
+                return RedirectToAction(nameof(Home), "General");
+            }
+
+            return View(response);
+        }
+
 
 
     }
