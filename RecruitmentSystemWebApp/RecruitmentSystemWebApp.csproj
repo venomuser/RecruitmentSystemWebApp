@@ -35,6 +35,7 @@
     <Folder Include="Areas\CompanyArea\Models\" />
     <Folder Include="Areas\SiteAdmin\Data\" />
     <Folder Include="Areas\SiteAdmin\Models\" />
+    <Folder Include="wwwroot\AppUploads\" />
   </ItemGroup>
 
 </Project>
