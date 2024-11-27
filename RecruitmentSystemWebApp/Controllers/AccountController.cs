@@ -225,7 +225,7 @@ namespace RecruitmentSystemWebApp.Controllers
 
         [HttpPost]
         [Authorize(Roles = "CompanyUser")]
-        [ServiceFilter(typeof(EmailMatchAuthorizationFilter))]
+        //[ServiceFilter(typeof(EmailMatchAuthorizationFilter))]
         public async Task<IActionResult> CompanyEdit(CompanyEditDTO companyEditDTO, IFormFile? avatar)
         {
             if (companyEditDTO == null)
